@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+
+Sitemap: https://gartenpflege-maria-md.de/sitemap.xml

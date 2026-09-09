@@ -1,0 +1,13 @@
+# Rohmaterial und Prüfläufe gehören nicht ins Repository
+_raw/
+_work/
+_review/
+_proto/
+.impeccable/
+
+# Lokale Einstellungen
+.claude/settings.local.json
+
+.DS_Store
+.env
+node_modules/
