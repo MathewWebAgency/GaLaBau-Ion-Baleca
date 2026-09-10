@@ -64,8 +64,18 @@
   (function heroKante() {
     var hero = document.getElementById('top');
     if (!hero) return;
-    var keil = hero.querySelector('.hero__keil');
+    var bahn = hero.querySelector('.hero__bild');
     var setzen = function (v) { hero.style.setProperty('--w', v.toFixed(4)); };
+
+    // Während die Bahn breiter wird, rechnet der Bildausschnitt neu: das Foto
+    // wird auf die Breite skaliert, dadurch wandert oben etwas aus dem Rahmen —
+    // und oben steht der Mann auf der Leiter. Deshalb wandert der Bildpunkt
+    // gegenläufig nach oben, damit er im Bild bleibt.
+    var AUSSCHNITT_RUHE = 34;
+    var AUSSCHNITT_OFFEN = 2;
+    var ausschnitt = function (t) {
+      hero.style.setProperty('--oy', (AUSSCHNITT_RUHE + (AUSSCHNITT_OFFEN - AUSSCHNITT_RUHE) * t).toFixed(1) + '%');
+    };
 
     // Auf schmalen Geräten liegt die Kante waagerecht. Sie darf nie in den Text
     // laufen, deshalb wird sie am tatsächlichen Inhalt gemessen statt geraten.
@@ -91,7 +101,7 @@
       uebernommen = true;
       hero.classList.add('uebernommen', 'bewegt');
     };
-    if (keil) keil.addEventListener('animationend', uebernehmen, { once: true });
+    if (bahn) bahn.addEventListener('animationend', uebernehmen, { once: true });
     setTimeout(uebernehmen, 1600);
 
     ScrollTrigger.create({
@@ -100,6 +110,7 @@
         if (s.progress > 0.002) uebernehmen();
         if (!uebernommen) return;
         setzen(ruhe - s.progress * (ruhe - 0.06));
+        ausschnitt(s.progress);
       }
     });
 
@@ -112,6 +123,129 @@
         ScrollTrigger.refresh();
       }, 180);
     });
+  })();
+
+  /* ===================== Bewegtbild im Hero ============================= */
+  /* Ions eigene Aufnahme, tonlos und als Schleife. Sie lädt bewusst spät und
+     nur dort, wo sie etwas bringt: das Standbild trägt den ersten Bildaufbau,
+     auf schmalen Geräten bleibt es dabei, und wer Datensparen eingeschaltet hat
+     oder wenig Bewegung möchte, bekommt sie gar nicht erst. */
+  (function heroBewegt() {
+    var video = document.getElementById('hero-video');
+    if (!video) return;
+    if (istRuhig()) return;
+    if (!window.matchMedia('(min-width: 861px)').matches) return;
+
+    var netz = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (netz && (netz.saveData || /(^|-)2g$/.test(netz.effectiveType || ''))) return;
+
+    var laeuft = false;
+    var anwerfen = function () {
+      if (laeuft) return;
+      laeuft = true;
+      video.src = 'assets/video/rundgang-hero.mp4';
+      video.addEventListener('playing', function () {
+        video.classList.add('laeuft');
+      }, { once: true });
+      var versuch = video.play();
+      if (versuch && versuch.catch) {
+        // Lehnt der Browser das Abspielen ab, bleibt einfach das Standbild stehen.
+        versuch.catch(function () { video.removeAttribute('src'); video.load(); });
+      }
+    };
+
+    var starten = function () { window.setTimeout(anwerfen, 700); };
+    if (document.readyState === 'complete') starten();
+    else window.addEventListener('load', starten, { once: true });
+
+    // Ausserhalb des Bildes braucht niemand ein laufendes Video.
+    var io = new IntersectionObserver(function (eintraege) {
+      if (!laeuft) return;
+      if (eintraege[0].isIntersecting) video.play().catch(function () {});
+      else video.pause();
+    }, { threshold: 0.05 });
+    io.observe(video);
+  })();
+
+  /* ========================= Fotos anhängen ============================= */
+  /* Am Telefon gibt es zwei Wege, und beide sollen sichtbar sein: aufnehmen
+     oder aus der Galerie. Beide Felder schreiben in dieselbe Liste, damit das
+     Formular am Ende nur ein Feld verschickt. */
+  (function fotos() {
+    var galerie = document.getElementById('foto');
+    var kamera = document.getElementById('foto-kamera');
+    var liste = document.getElementById('fotoliste');
+    if (!galerie || !liste) return;
+
+    var MAX = 3;
+    var kannBuendeln = typeof window.DataTransfer === 'function';
+
+    // Ohne Kamera am Gerät wäre der Knopf eine Sackgasse: er öffnet dann nur
+    // denselben Dateidialog. Deshalb erscheint er nur auf Zeigegeräten, die
+    // sich wie ein Finger verhalten.
+    var knopf = document.getElementById('foto-kamera-knopf');
+    if (knopf && kamera && window.matchMedia('(pointer: coarse)').matches) knopf.hidden = false;
+
+    var mb = function (bytes) {
+      var m = bytes / (1024 * 1024);
+      return (m < 0.1 ? '<0,1' : m.toFixed(1).replace('.', ',')) + ' MB';
+    };
+
+    var setze = function (dateien) {
+      if (!kannBuendeln) return;
+      var dt = new DataTransfer();
+      dateien.slice(0, MAX).forEach(function (f) { dt.items.add(f); });
+      galerie.files = dt.files;
+    };
+
+    var zeichne = function () {
+      var dateien = Array.prototype.slice.call(galerie.files);
+      liste.textContent = '';
+      dateien.forEach(function (datei, i) {
+        var li = document.createElement('li');
+        var name = document.createElement('span');
+        name.className = 'fotoliste__name';
+        name.textContent = datei.name;
+        var groesse = document.createElement('span');
+        groesse.className = 'fotoliste__groesse';
+        groesse.textContent = mb(datei.size);
+        li.appendChild(name);
+        li.appendChild(groesse);
+        if (kannBuendeln) {
+          var weg = document.createElement('button');
+          weg.type = 'button';
+          weg.className = 'fotoliste__weg';
+          weg.setAttribute('aria-label', datei.name + ' wieder entfernen');
+          weg.textContent = '\u00d7';
+          weg.addEventListener('click', function () {
+            var rest = Array.prototype.slice.call(galerie.files);
+            rest.splice(i, 1);
+            setze(rest);
+            zeichne();
+          });
+          li.appendChild(weg);
+        }
+        liste.appendChild(li);
+      });
+    };
+
+    galerie.addEventListener('change', zeichne);
+    if (kamera) {
+      kamera.addEventListener('change', function () {
+        if (!kamera.files.length) return;
+        if (kannBuendeln) {
+          setze(Array.prototype.slice.call(galerie.files)
+            .concat(Array.prototype.slice.call(kamera.files)));
+          kamera.value = '';
+        } else {
+          // Ohne DataTransfer geht nur eins von beidem. Dann gewinnt die
+          // Aufnahme, und das Feld trägt den Namen, damit sie mitgeschickt wird.
+          kamera.name = 'foto';
+          galerie.removeAttribute('name');
+        }
+        zeichne();
+      });
+    }
   })();
 
   /* ===================== Vorher / Nachher Regler ======================== */

@@ -25,9 +25,12 @@ selbst. `index.html` liegt danach direkt unter `/`.
 
 ## Technik
 
-- Schriften lokal als woff2, auf den deutschen Zeichensatz reduziert, 200 KB gesamt.
-  Keine Verbindung zu Google Fonts.
+- Zwei Schriften, lokal als woff2, auf den deutschen Zeichensatz reduziert, 164 KB
+  gesamt: **Archivo** für Überschriften, Auszeichnungen und Zahlen, **Newsreader**
+  für den Fließtext. Keine Verbindung zu Google Fonts.
 - GSAP mit ScrollTrigger, lokal eingebunden.
 - Keine Cookies, keine Reichweitenmessung, keine externen Einbindungen.
-- Alle Bilder in vier Größen als WebP.
+- Alle Bilder in vier Größen als WebP, gebaut mit `python3 .claude/bilder.py`.
+  Ein Durchgang vom Original bis zur fertigen Datei, ohne Zwischenschritt und ohne
+  Vergrößerung. Die Marke kommt aus `python3 .claude/logo.py`.
 - Ohne JavaScript vollständig lesbar und bedienbar.

@@ -113,6 +113,23 @@ werte ausgelesen. Keine Farbe hier ist geraten.
 | Text auf dunkel (Kalk) | `#F2EFE9` | nie `#FFF` |
 | Akzent (Moos) | `#6B6E4F` | Lorbeer und Buchs, gemessen `#6B6E4F` |
 
+**Nachtrag 10.09.2026, das dunkle Band wurde grün.** Der Kunde wollte mehr Grün. Ich
+habe davon abgeraten, Grün zur Flächenfarbe zu machen — Grün auf Grün ist das
+Branchenklischee, und die Herleitung oben sagt ausdrücklich, dass das Grün aus den
+Fotos kommt. Der Kompromiss hält beides: die Farbe ist weiterhin **gemessen**, nur aus
+einer anderen Quelle.
+
+| Rolle | Wert | Herkunft |
+|---|---|---|
+| Laub im Mittel | `#4A623C` | Mittelwert aller eindeutig grünen Bildpunkte über fünf Aufnahmen: Eibe, Eibenhecke, Hecke nah, Lorbeerkugeln, fertige Anlage |
+| Grund dunkel, neu | `#1D2718` | dasselbe Laub, abgedunkelt auf **genau die Helligkeit**, die das braune Band hatte. Kontrast zu Kalk bleibt 13,4:1 |
+| Grund dunkel, zweite Stufe | `#3E5232` | dasselbe, auf die Helligkeit des alten `#614642` |
+| Hauptknopf | `#8E9270` | der helle Moos-Ton. Text darauf 5,2:1, Fläche gegen das Band 4,8:1 |
+
+Beim Knopf bin ich vom Vorgeschlagenen abgewichen: der dunklere Moos-Ton `#5D6043`
+hätte auf dem grünen Band nur 3:1 Flächenkontrast gehabt und den wichtigsten Knopf der
+Seite verschluckt. Der helle Ton hält das Grün und die Sichtbarkeit.
+
 Drei Farben plus drei Zwischentöne. Der Akzent kommt selten: Eyebrows, Linien, aktive
 Zustände. Die Handlungsaufforderung ist keine bunte Fläche, sondern Mulch-Dunkel mit
 Kalk-Text. Kraft durch Kontrast, nicht durch Farbe.

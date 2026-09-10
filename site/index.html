@@ -25,9 +25,12 @@
 <link rel="icon" href="assets/icon/icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/icon/icon-180.png">
 <link rel="manifest" href="site.webmanifest">
-<link rel="preload" href="assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/garten-panorama-800.webp"
-      imagesrcset="assets/img/garten-panorama-480.webp 480w, assets/img/garten-panorama-800.webp 800w, assets/img/garten-panorama-1200.webp 1200w"
+<link rel="preload" href="assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" media="(min-width:861px)" href="assets/img/hero-hecke-800.webp"
+      imagesrcset="assets/img/hero-hecke-480.webp 480w, assets/img/hero-hecke-800.webp 800w, assets/img/hero-hecke-1280.webp 1280w, assets/img/hero-hecke.webp 1800w"
+      imagesizes="43vw" fetchpriority="high">
+<link rel="preload" as="image" media="(max-width:860px)" href="assets/img/hero-hecke-quer-800.webp"
+      imagesrcset="assets/img/hero-hecke-quer-480.webp 480w, assets/img/hero-hecke-quer-800.webp 800w, assets/img/hero-hecke-quer-1200.webp 1200w, assets/img/hero-hecke-quer.webp 1400w"
       imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
@@ -35,7 +38,10 @@
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
 <header class="kopf" id="kopf">
-  <a class="kopf__marke" href="#top">Gartenpflege <span>Maria MD</span></a>
+  <a class="kopf__marke" href="#top">
+    <img class="marke" src="assets/img/marke-hell.svg" width="1610" height="1746" alt="" aria-hidden="true">
+    <span>Gartenpflege <span>Maria MD</span></span>
+  </a>
   <nav class="kopf__nav" aria-label="Abschnitte dieser Seite">
     <a href="#vorher-nachher">Vorher und nachher</a>
     <a href="#leistungen">Leistungen</a>
@@ -50,21 +56,30 @@
 
 <!-- ============================ 1 · Hero ============================ -->
 <section class="hero" id="top">
-  <div class="hero__bg">
-    <img src="assets/img/garten-panorama-1200.webp"
-         srcset="assets/img/garten-panorama-800.webp 800w, assets/img/garten-panorama-1200.webp 1200w, assets/img/garten-panorama.webp 1401w"
-         sizes="100vw" width="1401" height="1571" fetchpriority="high" decoding="async"
-         alt="Fertig angelegter Hanggarten mit Travertintreppe, Kiesbeeten, geschnittenen Lorbeerkugeln und Blick über die Felder">
+  <div class="hero__bild">
+    <video class="hero__video" id="hero-video" muted playsinline loop preload="none"
+           tabindex="-1" aria-hidden="true"></video>
+    <picture>
+      <source media="(max-width:860px)" sizes="100vw"
+              srcset="assets/img/hero-hecke-quer-480.webp 480w, assets/img/hero-hecke-quer-800.webp 800w, assets/img/hero-hecke-quer-1200.webp 1200w, assets/img/hero-hecke-quer.webp 1400w">
+      <img src="assets/img/hero-hecke-800.webp"
+           srcset="assets/img/hero-hecke-480.webp 480w, assets/img/hero-hecke-800.webp 800w, assets/img/hero-hecke-1280.webp 1280w, assets/img/hero-hecke.webp 1800w"
+           sizes="43vw" width="1800" height="2400" fetchpriority="high" decoding="async"
+           alt="Ion Baleca steht auf einer Anlegeleiter auf einer mannshohen Eibe und nimmt ihre Krone zurück">
+    </picture>
   </div>
-  <div class="hero__keil"></div>
   <div class="hero__linie" aria-hidden="true"></div>
 
   <div class="hero__inhalt">
+    <p class="hero__marke">
+      <img src="assets/img/marke-hell.svg" width="1610" height="1746" alt="" aria-hidden="true">
+      <span>Gartenpflege <b>Maria MD</b></span>
+    </p>
     <h1>
       <span class="zeile"><span>Erst räumen.</span></span>
       <span class="zeile"><span>Dann anlegen.</span></span>
     </h1>
-    <p class="hero__sub">Ion Baleca kommt vorbei, sagt Ihnen was es kostet, und macht es. Vom verwilderten Grundstück bis zum Beet, das gepflegt bleibt.</p>
+    <p class="hero__sub">Ich komme vorbei, sage Ihnen was es kostet, und mache es. Vom verwilderten Grundstück bis zum Beet, das gepflegt bleibt.</p>
     <div class="hero__cta">
       <a class="btn btn--hell" href="#kontakt">Foto schicken</a>
       <a class="btn btn--rand zahl" href="tel:+4915750622718">0157 506 227 18</a>
@@ -72,11 +87,11 @@
   </div>
 
   <div class="plakette">
-    <span class="label plakette__schl">Einzugsgebiet</span>
-    <span class="label">Koblenz</span>
-    <span class="label">Neuwied</span>
-    <span class="label">Montabaur</span>
-    <span class="label">Mayen</span>
+    <span class="plakette__schl">Einzugsgebiet</span>
+    <span class="plakette__ort">Koblenz</span>
+    <span class="plakette__ort">Neuwied</span>
+    <span class="plakette__ort">Montabaur</span>
+    <span class="plakette__ort">Mayen</span>
   </div>
 </section>
 
@@ -84,101 +99,100 @@
 <section class="band band--hell band--kante" id="vorher-nachher">
   <div class="wrap">
     <div class="kopfzeile-sektion auf">
-      <span class="label">Vorher und nachher</span>
       <h2>Sechs Stellen, die vorher niemand fotografiert hätte.</h2>
-      <p class="gross leise">Ziehen Sie den Regler. Alle Bilder stammen von Ions eigenen Einsätzen, keins ist gekauft.</p>
+      <p class="gross leise">Ziehen Sie den Regler. Alle Bilder sind auf meinen eigenen Einsätzen entstanden, keins ist gekauft.</p>
     </div>
 
     <div class="ba-gitter">
 
       <figure class="ba auf" data-ba>
         <div class="ba__buehne">
-          <img src="assets/img/ba-hof-nachher-800.webp" srcset="assets/img/ba-hof-nachher-480.webp 480w, assets/img/ba-hof-nachher-800.webp 800w, assets/img/ba-hof-nachher.webp 1072w" sizes="(min-width:1120px) 33vw, (min-width:700px) 50vw, 92vw" width="1072" height="1429" loading="lazy" decoding="async" alt="Gepflasterter Hof zwischen zwei Häusern, Fugen sauber, Fläche frei">
+          <img src="assets/img/ba-hof-nachher-800.webp" srcset="assets/img/ba-hof-nachher-480.webp 480w, assets/img/ba-hof-nachher-800.webp 800w, assets/img/ba-hof-nachher.webp 1072w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1072" height="1340" loading="lazy" decoding="async" alt="Sauber gereinigter Pflasterhof zwischen zwei Häusern">
           <div class="ba__vorher">
-            <img src="assets/img/ba-hof-vorher-800.webp" srcset="assets/img/ba-hof-vorher-480.webp 480w, assets/img/ba-hof-vorher-800.webp 800w, assets/img/ba-hof-vorher.webp 1200w" sizes="(min-width:1120px) 33vw, (min-width:700px) 50vw, 92vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Derselbe Hof mit Unkraut in allen Pflasterfugen">
+            <img src="assets/img/ba-hof-vorher-800.webp" srcset="assets/img/ba-hof-vorher-480.webp 480w, assets/img/ba-hof-vorher-800.webp 800w, assets/img/ba-hof-vorher.webp 1200w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1200" height="1500" loading="lazy" decoding="async" alt="Derselbe Hof mit Unkraut in allen Pflasterfugen">
           </div>
           <div class="ba__kante" aria-hidden="true"></div>
-          <span class="label ba__marke ba__marke--v">Vorher</span>
-          <span class="label ba__marke ba__marke--n">Nachher</span>
+          <span class="ba__marke ba__marke--v">Vorher</span>
+          <span class="ba__marke ba__marke--n">Nachher</span>
           <div class="ba__griff" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
           <input class="ba__regler" type="range" min="0" max="100" value="50" step="0.5" aria-label="Hofeinfahrt: Vergleich zwischen vorher und nachher verschieben">
         </div>
-        <figcaption><span class="label">Hof</span> Fugen ausgekratzt, Fläche gereinigt</figcaption>
+        <figcaption><b>Hof</b> — Fugen ausgekratzt, Fläche gereinigt</figcaption>
       </figure>
 
       <figure class="ba auf" data-ba>
         <div class="ba__buehne">
-          <img src="assets/img/ba-mauer-nachher-800.webp" srcset="assets/img/ba-mauer-nachher-480.webp 480w, assets/img/ba-mauer-nachher-800.webp 800w, assets/img/ba-mauer-nachher.webp 900w" sizes="(min-width:1120px) 33vw, (min-width:700px) 50vw, 92vw" width="900" height="800" loading="lazy" decoding="async" alt="Freigelegte Mauer mit Tor, der Efeu ist auf die Mauerkrone zurückgenommen">
+          <img src="assets/img/ba-mauer-nachher-480.webp" srcset="assets/img/ba-mauer-nachher-480.webp 480w, assets/img/ba-mauer-nachher.webp 640w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="640" height="800" loading="lazy" decoding="async" alt="Freigelegte Mauer mit Tor, der Efeu ist auf die Mauerkrone zurückgenommen">
           <div class="ba__vorher">
-            <img src="assets/img/ba-mauer-vorher-800.webp" srcset="assets/img/ba-mauer-vorher-480.webp 480w, assets/img/ba-mauer-vorher-800.webp 800w, assets/img/ba-mauer-vorher.webp 900w" sizes="(min-width:1120px) 33vw, (min-width:700px) 50vw, 92vw" width="900" height="800" loading="lazy" decoding="async" alt="Dieselbe Mauer, vollständig unter Efeu und Wildwuchs verschwunden">
+            <img src="assets/img/ba-mauer-vorher-480.webp" srcset="assets/img/ba-mauer-vorher-480.webp 480w, assets/img/ba-mauer-vorher.webp 640w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="640" height="800" loading="lazy" decoding="async" alt="Dieselbe Mauer, vollständig unter Efeu und Wildwuchs verschwunden">
           </div>
           <div class="ba__kante" aria-hidden="true"></div>
-          <span class="label ba__marke ba__marke--v">Vorher</span>
-          <span class="label ba__marke ba__marke--n">Nachher</span>
+          <span class="ba__marke ba__marke--v">Vorher</span>
+          <span class="ba__marke ba__marke--n">Nachher</span>
           <div class="ba__griff" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
           <input class="ba__regler" type="range" min="0" max="100" value="50" step="0.5" aria-label="Zugewachsene Mauer: Vergleich zwischen vorher und nachher verschieben">
         </div>
-        <figcaption><span class="label">Mauer</span> Efeu abgenommen, Wand wieder sichtbar</figcaption>
+        <figcaption><b>Mauer</b> — Efeu abgenommen, Wand wieder sichtbar</figcaption>
       </figure>
 
       <figure class="ba auf" data-ba>
         <div class="ba__buehne">
-          <img src="assets/img/ba-garage-nachher.webp" width="450" height="800" loading="lazy" decoding="async" alt="Garage mit sauber geschnittenem Efeu an der Seitenwand">
+          <img src="assets/img/ba-formschnitt-nachher-480.webp" srcset="assets/img/ba-formschnitt-nachher-480.webp 480w, assets/img/ba-formschnitt-nachher.webp 668w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="668" height="835" loading="lazy" decoding="async" alt="Dieselbe Thuja fertig geschnitten, die Etagen stehen wieder frei übereinander">
           <div class="ba__vorher">
-            <img src="assets/img/ba-garage-vorher.webp" width="450" height="800" loading="lazy" decoding="async" alt="Dieselbe Garage, der Efeu hängt über Dach und Tor">
+            <img src="assets/img/ba-formschnitt-vorher-800.webp" srcset="assets/img/ba-formschnitt-vorher-480.webp 480w, assets/img/ba-formschnitt-vorher-800.webp 800w, assets/img/ba-formschnitt-vorher.webp 950w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="950" height="1188" loading="lazy" decoding="async" alt="Thuja mit ineinander gewachsenen Etagen, daneben wird von Hand nachgeschnitten">
           </div>
           <div class="ba__kante" aria-hidden="true"></div>
-          <span class="label ba__marke ba__marke--v">Vorher</span>
-          <span class="label ba__marke ba__marke--n">Nachher</span>
+          <span class="ba__marke ba__marke--v">Vorher</span>
+          <span class="ba__marke ba__marke--n">Nachher</span>
+          <div class="ba__griff" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
+          <input class="ba__regler" type="range" min="0" max="100" value="50" step="0.5" aria-label="Thuja im Formschnitt: Vergleich zwischen vorher und nachher verschieben">
+        </div>
+        <figcaption><b>Formschnitt</b> — Aus dem Wildwuchs zurück in die Form</figcaption>
+      </figure>
+
+      <figure class="ba auf" data-ba>
+        <div class="ba__buehne">
+          <img src="assets/img/ba-garage-nachher-800.webp" srcset="assets/img/ba-garage-nachher-480.webp 480w, assets/img/ba-garage-nachher-800.webp 800w, assets/img/ba-garage-nachher.webp 1000w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1000" height="1250" loading="lazy" decoding="async" alt="Garage mit sauber geschnittenem Efeu an der Seitenwand">
+          <div class="ba__vorher">
+            <img src="assets/img/ba-garage-vorher-800.webp" srcset="assets/img/ba-garage-vorher-480.webp 480w, assets/img/ba-garage-vorher-800.webp 800w, assets/img/ba-garage-vorher.webp 1000w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1000" height="1250" loading="lazy" decoding="async" alt="Dieselbe Garage, der Efeu hängt über Dach und Tor">
+          </div>
+          <div class="ba__kante" aria-hidden="true"></div>
+          <span class="ba__marke ba__marke--v">Vorher</span>
+          <span class="ba__marke ba__marke--n">Nachher</span>
           <div class="ba__griff" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
           <input class="ba__regler" type="range" min="0" max="100" value="50" step="0.5" aria-label="Garageneinfahrt: Vergleich zwischen vorher und nachher verschieben">
         </div>
-        <figcaption><span class="label">Garage</span> Bewuchs zurückgeschnitten, Tor wieder frei</figcaption>
+        <figcaption><b>Garage</b> — Bewuchs zurückgeschnitten, Tor wieder frei</figcaption>
       </figure>
 
       <figure class="ba auf" data-ba>
         <div class="ba__buehne">
-          <img src="assets/img/ba-ecke-nachher.webp" width="450" height="800" loading="lazy" decoding="async" alt="Hausecke mit auf Form geschnittener Eibe, der Gehweg ist frei">
+          <img src="assets/img/ba-ecke-nachher-800.webp" srcset="assets/img/ba-ecke-nachher-480.webp 480w, assets/img/ba-ecke-nachher-800.webp 800w, assets/img/ba-ecke-nachher.webp 1000w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1000" height="1250" loading="lazy" decoding="async" alt="Hausecke mit auf Form geschnittener Eibe, der Gehweg ist frei">
           <div class="ba__vorher">
-            <img src="assets/img/ba-ecke-vorher.webp" width="450" height="800" loading="lazy" decoding="async" alt="Dieselbe Hausecke, Eibe und Efeu wachsen über den Gehweg">
+            <img src="assets/img/ba-ecke-vorher-800.webp" srcset="assets/img/ba-ecke-vorher-480.webp 480w, assets/img/ba-ecke-vorher-800.webp 800w, assets/img/ba-ecke-vorher.webp 1000w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1000" height="1250" loading="lazy" decoding="async" alt="Dieselbe Hausecke, Eibe und Efeu wachsen über den Gehweg">
           </div>
           <div class="ba__kante" aria-hidden="true"></div>
-          <span class="label ba__marke ba__marke--v">Vorher</span>
-          <span class="label ba__marke ba__marke--n">Nachher</span>
+          <span class="ba__marke ba__marke--v">Vorher</span>
+          <span class="ba__marke ba__marke--n">Nachher</span>
           <div class="ba__griff" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
           <input class="ba__regler" type="range" min="0" max="100" value="50" step="0.5" aria-label="Hausecke: Vergleich zwischen vorher und nachher verschieben">
         </div>
-        <figcaption><span class="label">Hausecke</span> Wildwuchs entfernt, Kanten gesetzt</figcaption>
+        <figcaption><b>Hausecke</b> — Wildwuchs entfernt, Kanten gesetzt</figcaption>
       </figure>
 
       <figure class="ba auf" data-ba>
         <div class="ba__buehne">
-          <img src="assets/img/ba-grundstueck-nachher.webp" width="450" height="533" loading="lazy" decoding="async" alt="Geräumtes Grundstück mit offener Erdfläche und stehen gelassener Konifere">
+          <img src="assets/img/ba-grundstueck-nachher-800.webp" srcset="assets/img/ba-grundstueck-nachher-480.webp 480w, assets/img/ba-grundstueck-nachher-800.webp 800w, assets/img/ba-grundstueck-nachher.webp 1000w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1000" height="1250" loading="lazy" decoding="async" alt="Geräumtes Grundstück mit offener Erdfläche und stehen gelassener Konifere">
           <div class="ba__vorher">
-            <img src="assets/img/ba-grundstueck-vorher.webp" width="450" height="533" loading="lazy" decoding="async" alt="Dasselbe Grundstück vorher, komplett von Brombeere und Gras überwachsen">
+            <img src="assets/img/ba-grundstueck-vorher-800.webp" srcset="assets/img/ba-grundstueck-vorher-480.webp 480w, assets/img/ba-grundstueck-vorher-800.webp 800w, assets/img/ba-grundstueck-vorher.webp 1000w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1000" height="1250" loading="lazy" decoding="async" alt="Dasselbe Grundstück vorher, komplett von Brombeere und Gras überwachsen">
           </div>
           <div class="ba__kante" aria-hidden="true"></div>
-          <span class="label ba__marke ba__marke--v">Vorher</span>
-          <span class="label ba__marke ba__marke--n">Nachher</span>
+          <span class="ba__marke ba__marke--v">Vorher</span>
+          <span class="ba__marke ba__marke--n">Nachher</span>
           <div class="ba__griff" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
           <input class="ba__regler" type="range" min="0" max="100" value="50" step="0.5" aria-label="Verwildertes Grundstück: Vergleich zwischen vorher und nachher verschieben">
         </div>
-        <figcaption><span class="label">Grundstück</span> Freigeschnitten und geräumt</figcaption>
-      </figure>
-
-      <figure class="ba auf" data-ba>
-        <div class="ba__buehne">
-          <img src="assets/img/ba-hauswand-nachher.webp" width="450" height="533" loading="lazy" decoding="async" alt="Freigelegter Weg an der Hauswand, gepflastert und begehbar">
-          <div class="ba__vorher">
-            <img src="assets/img/ba-hauswand-vorher.webp" width="450" height="533" loading="lazy" decoding="async" alt="Derselbe Weg vorher, von Efeu und Wildem Wein zugewachsen">
-          </div>
-          <div class="ba__kante" aria-hidden="true"></div>
-          <span class="label ba__marke ba__marke--v">Vorher</span>
-          <span class="label ba__marke ba__marke--n">Nachher</span>
-          <div class="ba__griff" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square"><path d="M9 6 4 12l5 6M15 6l5 6-5 6"/></svg></div>
-          <input class="ba__regler" type="range" min="0" max="100" value="50" step="0.5" aria-label="Hauswand: Vergleich zwischen vorher und nachher verschieben">
-        </div>
-        <figcaption><span class="label">Hauswand</span> Wand frei, Weg wieder begehbar</figcaption>
+        <figcaption><b>Grundstück</b> — Freigeschnitten und geräumt</figcaption>
       </figure>
 
     </div>
@@ -189,17 +203,16 @@
 <section class="band band--dunkel band--kante" id="leistungen">
   <div class="wrap">
     <div class="kopfzeile-sektion auf">
-      <span class="label">Was Ion macht</span>
       <h2>Sechs Sachen. Mehr steht nicht auf der Liste.</h2>
-      <p class="gross leise">Dafür stehen sie da, weil er sie regelmäßig macht und nicht, weil sie gut klingen.</p>
+      <p class="gross leise">Dafür stehen sie da, weil ich sie regelmäßig mache und nicht, weil sie gut klingen.</p>
     </div>
 
     <div class="leistungen">
 
       <article class="leistung auf">
         <div class="leistung__bild">
-          <img src="assets/img/haus-kugeln-800.webp" srcset="assets/img/haus-kugeln-480.webp 480w, assets/img/haus-kugeln-800.webp 800w, assets/img/haus-kugeln-1200.webp 1200w" sizes="(min-width:1080px) 32vw, (min-width:700px) 48vw, 92vw" width="1535" height="1247" loading="lazy" decoding="async" alt="Gepflegter Rasen vor einem Haus, davor eine Reihe geschnittener Lorbeerkugeln">
-          <span class="label leistung__nr">01</span>
+          <img src="assets/img/haus-kugeln-800.webp" srcset="assets/img/haus-kugeln-480.webp 480w, assets/img/haus-kugeln-800.webp 800w, assets/img/haus-kugeln-1200.webp 1200w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1535" height="1247" loading="lazy" decoding="async" alt="Gepflegter Rasen vor einem Haus, davor eine Reihe geschnittener Lorbeerkugeln">
+          <span class="leistung__nr">01</span>
         </div>
         <h3>Rasen und Boden</h3>
         <p>Mähen im festen Rhythmus, im Frühjahr vertikutieren, düngen wenn der Boden es braucht und nicht wenn der Kalender es sagt.</p>
@@ -208,8 +221,8 @@
 
       <article class="leistung auf">
         <div class="leistung__bild">
-          <img src="assets/img/ion-hecke-800.webp" srcset="assets/img/ion-hecke-480.webp 480w, assets/img/ion-hecke-800.webp 800w, assets/img/ion-hecke.webp 1200w" sizes="(min-width:1080px) 32vw, (min-width:700px) 48vw, 92vw" width="1200" height="1064" loading="lazy" decoding="async" alt="Ion Baleca schneidet eine hohe Thujahecke mit einem Langschaft-Heckenschneider">
-          <span class="label leistung__nr">02</span>
+          <img src="assets/img/hecke-strasse-800.webp" srcset="assets/img/hecke-strasse-480.webp 480w, assets/img/hecke-strasse-800.webp 800w, assets/img/hecke-strasse.webp 962w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="962" height="770" loading="lazy" decoding="async" alt="Ion Baleca schneidet mit dem Langschaftschneider eine Thujahecke am Straßenrand, das Schnittgut liegt schon am Boden">
+          <span class="leistung__nr">02</span>
         </div>
         <h3>Hecken, Bäume, Gehölze</h3>
         <p>Formschnitt an Buchs und Lorbeer, Rückschnitt an Thuja und Liguster. Auch dort, wo eine Leiter allein nicht mehr reicht.</p>
@@ -218,8 +231,8 @@
 
       <article class="leistung auf">
         <div class="leistung__bild">
-          <img src="assets/img/beet-abend-800.webp" srcset="assets/img/beet-abend-480.webp 480w, assets/img/beet-abend-800.webp 800w, assets/img/beet-abend.webp 1099w" sizes="(min-width:1080px) 32vw, (min-width:700px) 48vw, 92vw" width="1099" height="1432" loading="lazy" decoding="async" alt="Beet aus Rindenmulch und Zierkies mit Gräsern und Stauden im Abendlicht">
-          <span class="label leistung__nr">03</span>
+          <img src="assets/img/beet-abend-800.webp" srcset="assets/img/beet-abend-480.webp 480w, assets/img/beet-abend-800.webp 800w, assets/img/beet-abend.webp 1099w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1099" height="1432" loading="lazy" decoding="async" alt="Beet aus Rindenmulch und Zierkies mit Gräsern und Stauden im Abendlicht">
+          <span class="leistung__nr">03</span>
         </div>
         <h3>Beete und Pflanzungen</h3>
         <p>Jäten, Vlies verlegen, Mulch und Kies aufziehen, neu bepflanzen. Die Kante zwischen den Materialien wird von Hand gezogen.</p>
@@ -228,8 +241,8 @@
 
       <article class="leistung auf">
         <div class="leistung__bild">
-          <img src="assets/img/ba-hof-nachher-800.webp" srcset="assets/img/ba-hof-nachher-480.webp 480w, assets/img/ba-hof-nachher-800.webp 800w, assets/img/ba-hof-nachher.webp 1072w" sizes="(min-width:1080px) 32vw, (min-width:700px) 48vw, 92vw" width="1072" height="1429" loading="lazy" decoding="async" alt="Sauber gereinigter Pflasterhof zwischen zwei Häusern">
-          <span class="label leistung__nr">04</span>
+          <img src="assets/img/ba-hof-nachher-800.webp" srcset="assets/img/ba-hof-nachher-480.webp 480w, assets/img/ba-hof-nachher-800.webp 800w, assets/img/ba-hof-nachher.webp 1072w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1072" height="1340" loading="lazy" decoding="async" alt="Sauber gereinigter Pflasterhof zwischen zwei Häusern">
+          <span class="leistung__nr">04</span>
         </div>
         <h3>Hof und Wege</h3>
         <p>Fugen auskratzen, Hochdruckreiniger drüber. Danach sieht das Pflaster wieder aus wie Pflaster und nicht wie eine Wiese.</p>
@@ -238,8 +251,8 @@
 
       <article class="leistung auf">
         <div class="leistung__bild">
-          <img src="assets/img/grundstueck-arbeit-800.webp" srcset="assets/img/grundstueck-arbeit-480.webp 480w, assets/img/grundstueck-arbeit-800.webp 800w, assets/img/grundstueck-arbeit.webp 1200w" sizes="(min-width:1080px) 32vw, (min-width:700px) 48vw, 92vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Halb freigeschnittenes Grundstück, zwei Freischneider liegen auf der gemähten Fläche">
-          <span class="label leistung__nr">05</span>
+          <img src="assets/img/grundstueck-arbeit-800.webp" srcset="assets/img/grundstueck-arbeit-480.webp 480w, assets/img/grundstueck-arbeit-800.webp 800w, assets/img/grundstueck-arbeit.webp 1200w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Halb freigeschnittenes Grundstück, zwei Freischneider liegen auf der gemähten Fläche">
+          <span class="leistung__nr">05</span>
         </div>
         <h3>Grundstück räumen</h3>
         <p>Freischneider, wo seit Jahren niemand mehr war. Brombeere, Schilf, Jungwuchs, alles runter und weg vom Grundstück.</p>
@@ -248,8 +261,8 @@
 
       <article class="leistung auf">
         <div class="leistung__bild">
-          <img src="assets/img/streifen-fertig-800.webp" srcset="assets/img/streifen-fertig-480.webp 480w, assets/img/streifen-fertig-800.webp 800w, assets/img/streifen-fertig.webp 1149w" sizes="(min-width:1080px) 32vw, (min-width:700px) 48vw, 92vw" width="1149" height="1410" loading="lazy" decoding="async" alt="Schmaler Streifen neben einem Haus, freigeräumt und mit jungen Gehölzen neu bepflanzt">
-          <span class="label leistung__nr">06</span>
+          <img src="assets/img/streifen-fertig-800.webp" srcset="assets/img/streifen-fertig-480.webp 480w, assets/img/streifen-fertig-800.webp 800w, assets/img/streifen-fertig.webp 1149w" sizes="(min-width:1500px) 420px, (min-width:1120px) 27vw, (min-width:1000px) 29vw, (min-width:700px) 45vw, 92vw" width="1149" height="1410" loading="lazy" decoding="async" alt="Schmaler Streifen neben einem Haus, freigeräumt und mit jungen Gehölzen neu bepflanzt">
+          <span class="leistung__nr">06</span>
         </div>
         <h3>Pflege nach Plan</h3>
         <p>Feste Termine über das Jahr verteilt. Der Grünschnitt wird mitgenommen, im Winter kommt Räumen und Streuen dazu.</p>
@@ -264,7 +277,6 @@
 <section class="band band--hell band--kante" id="handwerk">
   <div class="wrap">
     <div class="kopfzeile-sektion auf">
-      <span class="label">Handwerk</span>
       <h2>Wie aus einer Fläche ein Beet wird.</h2>
       <p class="gross leise">Drei Bilder von derselben Stelle, aufgenommen während der Arbeit.</p>
     </div>
@@ -276,7 +288,7 @@
     <div class="schritte">
       <article class="schritt auf">
         <div class="schritt__bild">
-          <img src="assets/img/beet-01-roh-800.webp" srcset="assets/img/beet-01-roh-480.webp 480w, assets/img/beet-01-roh-800.webp 800w, assets/img/beet-01-roh-1200.webp 1200w" sizes="(min-width:900px) 32vw, 92vw" width="1600" height="1199" loading="lazy" decoding="async" alt="Hang mit vorbereiteter Erde, die Pflanzen stehen noch in ihren Töpfen auf der Fläche verteilt">
+          <img src="assets/img/beet-01-roh-800.webp" srcset="assets/img/beet-01-roh-480.webp 480w, assets/img/beet-01-roh-800.webp 800w, assets/img/beet-01-roh-1200.webp 1200w" sizes="(min-width:1500px) 415px, (min-width:900px) 27vw, 92vw" width="1599" height="1199" loading="lazy" decoding="async" alt="Hang mit vorbereiteter Erde, die Pflanzen stehen noch in ihren Töpfen auf der Fläche verteilt">
         </div>
         <div class="schritt__kopf"><span class="schritt__nr">01</span><h3>Boden richten</h3></div>
         <p>Alte Wurzeln raus, Fläche abziehen, dann die Pflanzen in den Töpfen auf dem Boden verteilen, bis der Plan steht.</p>
@@ -284,7 +296,7 @@
 
       <article class="schritt auf">
         <div class="schritt__bild">
-          <img src="assets/img/beet-02-vlies-800.webp" srcset="assets/img/beet-02-vlies-480.webp 480w, assets/img/beet-02-vlies-800.webp 800w, assets/img/beet-02-vlies-1200.webp 1200w" sizes="(min-width:900px) 32vw, 92vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Dieselbe Fläche, weißes Unkrautvlies wird über den Hang gelegt">
+          <img src="assets/img/beet-02-vlies-800.webp" srcset="assets/img/beet-02-vlies-480.webp 480w, assets/img/beet-02-vlies-800.webp 800w, assets/img/beet-02-vlies-1200.webp 1200w" sizes="(min-width:1500px) 415px, (min-width:900px) 27vw, 92vw" width="1600" height="1200" loading="lazy" decoding="async" alt="Dieselbe Fläche, weißes Unkrautvlies wird über den Hang gelegt">
         </div>
         <div class="schritt__kopf"><span class="schritt__nr">02</span><h3>Vlies verlegen</h3></div>
         <p>Unkrautvlies über die ganze Fläche, überlappend, an den Rändern befestigt. Das spart später jede Woche Arbeit.</p>
@@ -292,7 +304,7 @@
 
       <article class="schritt auf">
         <div class="schritt__bild">
-          <img src="assets/img/beet-03-fertig-800.webp" srcset="assets/img/beet-03-fertig-480.webp 480w, assets/img/beet-03-fertig-800.webp 800w, assets/img/beet-03-fertig.webp 1064w" sizes="(min-width:900px) 32vw, 92vw" width="1064" height="1419" loading="lazy" decoding="async" alt="Dieselbe Stelle fertig: rotes Rindenmulchbeet mit heller Kiesfläche daneben, scharf getrennt">
+          <img src="assets/img/beet-03-fertig-800.webp" srcset="assets/img/beet-03-fertig-480.webp 480w, assets/img/beet-03-fertig-800.webp 800w, assets/img/beet-03-fertig.webp 1064w" sizes="(min-width:1500px) 415px, (min-width:900px) 27vw, 92vw" width="1064" height="1419" loading="lazy" decoding="async" alt="Dieselbe Stelle fertig: rotes Rindenmulchbeet mit heller Kiesfläche daneben, scharf getrennt">
         </div>
         <div class="schritt__kopf"><span class="schritt__nr">03</span><h3>Pflanzen und aufziehen</h3></div>
         <p>Kreuz ins Vlies schneiden, pflanzen, dann Rindenmulch und Kies. Die Kante dazwischen wird von Hand gezogen.</p>
@@ -306,20 +318,18 @@
   <div class="wrap">
     <div class="person">
       <div class="person__bild auf">
-        <img src="assets/img/ion-treppe-800.webp" srcset="assets/img/ion-treppe-480.webp 480w, assets/img/ion-treppe-800.webp 800w, assets/img/ion-treppe.webp 1171w" sizes="(min-width:900px) 40vw, 92vw" width="1170" height="1330" loading="lazy" decoding="async" alt="Ion Baleca in grüner Arbeitslatzhose auf einer Travertintreppe vor einem frisch angelegten Beet">
-        <p class="person__bu">Ion Baleca auf einer fertigen Anlage</p>
+        <img src="assets/img/ion-beet-800.webp" srcset="assets/img/ion-beet-480.webp 480w, assets/img/ion-beet-800.webp 800w, assets/img/ion-beet.webp 1064w" sizes="(min-width:1500px) 545px, (min-width:900px) 37vw, 92vw" width="1064" height="1330" loading="lazy" decoding="async" alt="Ion Baleca auf der Travertintreppe, er zeigt auf das frisch bepflanzte Kiesbeet daneben">
       </div>
 
-      <div class="person__text auf">
-        <span class="label eyebrow">Wer kommt</span>
-        <h2 class="eyebrow-h2">Bei Ihnen steht Ion, nicht eine Kolonne.</h2>
-        <p class="fliess">Sie bekommen keinen wechselnden Trupp und keine Telefonzentrale. Ion Baleca schaut sich die Fläche an, sagt Ihnen was gemacht werden muss und was es kostet, und steht danach selbst mit dem Gerät da.</p>
+      <div class="person__text sektion-kopf auf">
+        <h2>Bei Ihnen stehe ich, keine Kolonne.</h2>
+        <p class="fliess">Mein Name ist Ion Baleca. Sie bekommen keinen wechselnden Trupp und keine Telefonzentrale: Ich schaue mir die Fläche an, sage Ihnen was gemacht werden muss und was es kostet, und stehe danach selbst mit dem Gerät da.</p>
         <p class="fliess">Das ist der Unterschied, den man an den Kanten sieht. Wer eine Fläche nur abarbeitet, zieht den Mulch bis irgendwohin. Wer sie später wieder betreut, zieht die Grenze gerade.</p>
 
         <ul class="fakten">
-          <li><span class="k label">Einzugsgebiet</span><span class="v">Koblenz, Neuwied, Montabaur, Mayen und was dazwischen liegt</span></li>
-          <li><span class="k label">Erreichbar</span><span class="v"><mark class="platzhalter" data-todo>Zu ergänzen: wann geht wirklich jemand ans Telefon</mark></span></li>
-          <li><span class="k label">Im Geschäft seit</span><span class="v"><mark class="platzhalter" data-todo>Zu ergänzen: Jahr, nur wenn belegbar</mark></span></li>
+          <li><span class="k">Einzugsgebiet</span><span class="v">Koblenz, Neuwied, Montabaur, Mayen und was dazwischen liegt</span></li>
+          <li><span class="k">Erreichbar</span><span class="v"><mark class="platzhalter" data-todo>Zu ergänzen: wann geht wirklich jemand ans Telefon</mark></span></li>
+          <li><span class="k">Im Geschäft seit</span><span class="v"><mark class="platzhalter" data-todo>Zu ergänzen: Jahr, nur wenn belegbar</mark></span></li>
         </ul>
       </div>
     </div>
@@ -330,15 +340,14 @@
 <section class="band band--hell band--kante" id="rundgang">
   <div class="wrap">
     <div class="rundgang">
-      <div class="rundgang__text auf">
-        <span class="label eyebrow">Rundgang</span>
-        <h2 class="eyebrow-h2">Zwanzig Sekunden durch einen fertigen Garten.</h2>
+      <div class="rundgang__text sektion-kopf auf">
+        <h2>Zwanzig Sekunden durch einen fertigen Garten.</h2>
         <p class="fliess">Mit dem Handy aufgenommen, an einem Abend, ohne Schnitt. Die Treppe, die Kiesflächen und die geschnittenen Kugeln auf diesem Video sind dieselben, die oben auf den Bildern zu sehen sind.</p>
         <p class="fliess leise">Ohne Ton. Sie können das Video jederzeit anhalten.</p>
       </div>
 
       <div class="rundgang__rahmen auf">
-        <img id="rundgang-standbild" src="assets/img/beet-abend-800.webp" width="1099" height="1432" loading="lazy" decoding="async" alt="Standbild aus dem Rundgang: Beet aus Rindenmulch und Kies im Abendlicht">
+        <img id="rundgang-standbild" src="assets/img/rundgang-standbild.webp" srcset="assets/img/rundgang-standbild-480.webp 480w, assets/img/rundgang-standbild.webp 576w" sizes="(min-width:900px) 30vw, 92vw" width="576" height="1024" loading="lazy" decoding="async" alt="Standbild aus dem Rundgang: Beet aus Rindenmulch und Kies im Abendlicht">
         <video id="rundgang-video" muted playsinline loop preload="none"
                aria-label="Rundgang durch einen von Ion Baleca angelegten Garten, ohne Ton"></video>
         <button class="videoknopf" id="videoknopf" type="button" aria-pressed="false">
@@ -356,9 +365,8 @@
   <div class="wrap">
     <div class="einwaende">
     <div class="kopfzeile-sektion auf">
-      <span class="label">Was Leute abhält</span>
       <h2>Die Fragen, die vor dem Anruf kommen.</h2>
-      <p class="leise einwaende__hinweis">Steht Ihre Frage nicht dabei, rufen Sie einfach an. Ion geht selbst ans Telefon.</p>
+      <p class="leise einwaende__hinweis">Steht Ihre Frage nicht dabei, rufen Sie einfach an. Ich gehe selbst ans Telefon.</p>
     </div>
 
     <div class="fragen auf">
@@ -400,9 +408,8 @@
 <section class="band band--dunkel band--kante" id="kontakt">
   <div class="wrap">
     <div class="kopfzeile-sektion auf">
-      <span class="label">Anfrage</span>
       <h2>Schicken Sie ein Foto von der Stelle, die Sie stört.</h2>
-      <p class="gross leise">Ein Handyfoto reicht. Daran sieht Ion schneller was zu tun ist als an drei Absätzen Beschreibung.</p>
+      <p class="gross leise">Ein Handyfoto reicht. Daran sehe ich schneller was zu tun ist als an drei Absätzen Beschreibung.</p>
     </div>
 
     <div class="kontakt">
@@ -410,11 +417,11 @@
         <ol class="ablauf">
           <li><strong>Foto und ein Satz dazu</strong><p>Handyfoto genügt. Schreiben Sie kurz, was Sie stört und wo Sie wohnen.</p></li>
           <li><strong>Rückmeldung mit Einschätzung</strong><p>Sie hören, was gemacht werden muss und woran sich der Preis bemisst.</p></li>
-          <li><strong>Termin</strong><p>Wenn es für Sie passt, kommt Ion vorbei und legt los.</p></li>
+          <li><strong>Termin</strong><p>Wenn es für Sie passt, komme ich vorbei und lege los.</p></li>
         </ol>
 
         <div class="direkt">
-          <p class="label direkt__schl">Lieber direkt anrufen</p>
+          <p class="direkt__schl">Lieber direkt anrufen</p>
           <a class="zahl direkt__tel" href="tel:+4915750622718">0157 506 227 18</a>
           <p class="leise direkt__zeile">
             <a class="direkt__mail" href="mailto:info@gartenpflege-maria-md.de">info@gartenpflege-maria-md.de</a>
@@ -431,7 +438,7 @@
         <div class="feld">
           <label for="kontaktweg">Telefon oder E-Mail</label>
           <input id="kontaktweg" name="kontaktweg" aria-describedby="kontaktweg-fehler" type="text" autocomplete="tel" required>
-          <p class="feld__fehler" id="kontaktweg-fehler" hidden>Telefonnummer oder E-Mail, damit Ion antworten kann.</p>
+          <p class="feld__fehler" id="kontaktweg-fehler" hidden>Telefonnummer oder E-Mail, damit ich antworten kann.</p>
         </div>
         <div class="feld">
           <label for="ort">Ort oder Postleitzahl</label>
@@ -440,12 +447,24 @@
         <div class="feld">
           <label for="nachricht">Was soll gemacht werden?</label>
           <textarea id="nachricht" name="nachricht" aria-describedby="nachricht-fehler" required></textarea>
-          <p class="feld__fehler" id="nachricht-fehler" hidden>Ein Satz genügt, damit Ion weiß worum es geht.</p>
+          <p class="feld__fehler" id="nachricht-fehler" hidden>Ein Satz genügt, damit ich weiß worum es geht.</p>
         </div>
-        <div class="feld">
-          <label for="foto">Foto anhängen</label>
-          <input id="foto" name="foto" type="file" accept="image/*" multiple>
-          <p class="feld__hinweis leise">Bis zu drei Bilder, zusammen höchstens 8 MB.</p>
+        <div class="feld feld--foto" role="group" aria-labelledby="foto-titel" aria-describedby="foto-hinweis">
+          <span class="feld__titel" id="foto-titel">Foto anhängen</span>
+          <div class="fotowahl">
+            <label class="fotowahl__knopf" id="foto-kamera-knopf" hidden>
+              <input class="nurtastatur" id="foto-kamera" type="file" accept="image/*" capture="environment" aria-label="Foto mit der Kamera aufnehmen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 8.5h3.2L8 6h8l1.8 2.5H21V19H3z"/><circle cx="12" cy="13.4" r="3.3"/></svg>
+              Foto aufnehmen
+            </label>
+            <label class="fotowahl__knopf">
+              <input class="nurtastatur" id="foto" name="foto" type="file" accept="image/*" multiple aria-label="Fotos aus der Galerie wählen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 5h18v14H3z"/><path d="m3 16 5-4.5 3.5 3L15 11l6 5"/><circle cx="8.4" cy="8.6" r="1.5"/></svg>
+              Aus der Galerie
+            </label>
+          </div>
+          <ul class="fotoliste" id="fotoliste"></ul>
+          <p class="feld__hinweis leise" id="foto-hinweis">Bis zu drei Bilder, zusammen höchstens 8 MB. Am Telefon geht beides: aufnehmen oder aus der Galerie wählen.</p>
         </div>
 
         <input class="honig" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -467,6 +486,9 @@
   <div class="wrap">
     <div class="fuss__gitter">
       <div>
+        <p class="fuss__marke">
+          <img src="assets/img/marke-hell.svg" width="1610" height="1746" alt="" aria-hidden="true">
+        </p>
         <h2 class="fuss__h">Gartenpflege Maria MD</h2>
         <p class="fuss__adresse">St.-Maternus-Straße 7<br>56070 Koblenz</p>
       </div>
@@ -495,7 +517,7 @@
       </nav>
     </div>
     <div class="fuss__unten">
-      <span>Alle Bilder auf dieser Seite stammen von eigenen Einsätzen.</span>
+      <span>Alle Bilder auf dieser Seite sind auf meinen eigenen Einsätzen entstanden.</span>
       <span>&copy; <span class="zahl">2026</span> Gartenpflege Maria MD</span>
     </div>
   </div>
@@ -508,7 +530,7 @@
   "name":"Gartenpflege Maria MD",
   "description":"Gartenpflege, Heckenschnitt, Beetpflege, Hofreinigung und Grundstücksräumung im Raum Koblenz.",
   "url":"https://gartenpflege-maria-md.de/",
-  "image":"https://gartenpflege-maria-md.de/assets/img/garten-panorama.webp",
+  "image":"https://gartenpflege-maria-md.de/assets/img/hero-hecke.webp",
   "telephone":"+4915750622718",
   "email":"info@gartenpflege-maria-md.de",
   "address":{"@type":"PostalAddress","streetAddress":"St.-Maternus-Straße 7","postalCode":"56070","addressLocality":"Koblenz","addressRegion":"Rheinland-Pfalz","addressCountry":"DE"},
