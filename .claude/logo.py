@@ -25,7 +25,7 @@ import tempfile
 from PIL import Image, ImageFilter
 
 WURZEL = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-QUELLE = os.path.join(WURZEL, "_raw/neu/neu-06.jpg")
+QUELLE = os.path.join(WURZEL, "_raw/neu2/n2-16.jpg")
 IMG = os.path.join(WURZEL, "site/assets/img")
 # Fassungen, die die Seite selbst nicht braucht, aber der Kunde: Briefbogen,
 # Rechnung, Fahrzeugbeschriftung.
@@ -36,11 +36,13 @@ RAHMEN = 10        # dunkle Kante der Aufnahme, gehoert nicht zum Motiv
 BLATT_AB = 80      # ab diesem hellsten Kanal gilt ein Punkt als Blattwerk
 GENAU = 0.25       # Rasterfeinheit der Kurvenpunkte, siehe nachzeichnen()
 
-KIES = "#DCDED6"
-KALK = "#F2EFE9"
-MOOS_HELL = "#8E9270"
-B_DUNKEL = "#233024"
-MOOS_TEXT = "#5D6043"
+# Farben wie auf der Markentafel des Wagens: auf dunklem Grund ein goldener
+# Buchstabe mit grünem Blattwerk, auf hellem Grund beides dunkel.
+KIES = "#F1ECDE"
+KALK = "#E8C55C"      # der Buchstabe auf Dunkelgrün
+MOOS_HELL = "#5E9B45" # das Blattwerk auf Dunkelgrün, sonst säuft es ab
+B_DUNKEL = "#0C2E1F"  # der Buchstabe auf Creme
+MOOS_TEXT = "#2E7D32" # das Blattwerk auf Creme, Grün von der Tafel
 
 
 def masken():

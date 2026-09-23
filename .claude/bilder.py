@@ -98,20 +98,31 @@ def baue(quelle, name, box=None, ver=None, fokus=(0.5, 0.5), breiten=BREITEN,
 # ver: Zielverhältnis Breite/Höhe. fokus: Bildpunkt, der stehen bleibt.
 # ---------------------------------------------------------------------------
 AUFTRAEGE = [
-    # --- Hero: Ion auf der Leiter über der geschnittenen Eibe.
-    #     Die Aufnahme hat 1200 Bildpunkte, die Bildbahn braucht auf einem
-    #     grossen Retina-Bildschirm rund 1650. Deshalb liegt hier die
-    #     verdoppelte Fassung zugrunde. ---
-    # Die Bildbahn ist gemessen 43vw breit. Auf einem 1440er Retina-Schirm sind
-    # das 1238 Bildpunkte, deshalb die Zwischenstufe 1280 statt eines Sprungs
-    # von 1200 auf 1600.
-    dict(quelle="_work/up/up-hero.png", name="hero-hecke", ver=None, deckel=1800,
-         breiten=(480, 800, 1280)),
-    # Für schmale Geräte ein eigener Ausschnitt: dort ist die Bildbahn ein
-    # querliegendes Band, in dem das Hochformat den Mann abschneiden würde.
-    dict(quelle="_work/up/up-hero.png", name="hero-hecke-quer", box=(0.19, 0.0, 0.95, 0.40), deckel=1400),
+    # --- Hero: dieselbe Thujahecke, einmal wild und einmal geschnitten.
+    #     Beide Aufnahmen stehen am selben Bordstein, deshalb laesst sich die
+    #     Schnittkante beim Scrollen durch das Bild fahren. Die Ausschnitte sind
+    #     so gesetzt, dass die Kante Pflaster/Hecke in beiden auf 60 Prozent der
+    #     Bildhoehe liegt, sonst springt die Naht beim Wischen. ---
+    dict(quelle="_raw/neu3/n3-10.jpg", name="hecke-wild", box=(0.0, 0.28, 1.0, 0.98),
+         ver=1.07, breiten=(480, 800)),
+    dict(quelle="_raw/neu3/n3-09.jpg", name="hecke-schnitt", box=(0.0, 0.30, 1.0, 1.0),
+         ver=1.07, breiten=(480, 800)),
+    # Hochformat fuer schmale Geraete, dieselbe Grundlinie.
+    dict(quelle="_raw/neu3/n3-10.jpg", name="hecke-wild-hoch", box=(0.0, 0.20, 1.0, 1.0),
+         ver=0.62, breiten=(480,)),
+    dict(quelle="_raw/neu3/n3-09.jpg", name="hecke-schnitt-hoch", box=(0.0, 0.22, 1.0, 1.0),
+         ver=0.62, breiten=(480,)),
+
+    # --- Band zwischen zwei Sektionen: die Fichte kommt runter. ---
+    dict(quelle="_raw/neu3/n3-08.jpg", name="baum-band", box=(0.0, 0.10, 1.0, 0.86),
+         ver=2.1, fokus=(0.58, 0.5), deckel=1600),
 
     # --- Vorher / Nachher ---
+    # Der erste Vergleich: derselbe Garten, links das Gestaenge eines alten
+    # Gewaechshauses im Gestruepp, rechts die geraeumte Flaeche. Beide
+    # Aufnahmen stammen aus Ions Telefon, nichts ist hochgerechnet.
+    dict(quelle="_raw/neu2/n2-07.jpg", name="ba-raeumung-vorher", ver=4 / 5, fokus=(0.5, 0.52)),
+    dict(quelle="_raw/neu2/n2-12.jpg", name="ba-raeumung-nachher", ver=4 / 5, fokus=(0.5, 0.52)),
     dict(quelle="_work/named/ba-hof-vorher.jpg", name="ba-hof-vorher", ver=4 / 5, fokus=(0.5, 0.5)),
     dict(quelle="_work/named/ba-hof-nachher.jpg", name="ba-hof-nachher", ver=4 / 5, fokus=(0.5, 0.5)),
     dict(quelle="_work/named/ba-mauer-vorher.jpg", name="ba-mauer-vorher", ver=4 / 5, fokus=(0.5, 0.5)),
@@ -121,8 +132,10 @@ AUFTRAEGE = [
     # und Marke"). Die Originale aus Ions Telefon waeren immer noch besser.
     dict(quelle="_work/up/up-ba-garage-vorher.png", name="ba-garage-vorher", ver=4 / 5, fokus=(0.5, 0.5), deckel=1000),
     dict(quelle="_work/up/up-ba-garage-nachher.png", name="ba-garage-nachher", ver=4 / 5, fokus=(0.5, 0.5), deckel=1000),
-    dict(quelle="_work/up/up-ba-ecke-vorher.png", name="ba-ecke-vorher", ver=4 / 5, fokus=(0.5, 0.5), deckel=1000),
-    dict(quelle="_work/up/up-ba-ecke-nachher.png", name="ba-ecke-nachher", ver=4 / 5, fokus=(0.5, 0.5), deckel=1000),
+    # Die Hausecke ist raus. An ihrer Stelle steht das Heckenpaar, echt und
+    # unbearbeitet, dieselbe Hecke wie im Hero.
+    dict(quelle="_raw/neu3/n3-10.jpg", name="ba-hecke-vorher", ver=4 / 5, fokus=(0.5, 0.62)),
+    dict(quelle="_raw/neu3/n3-09.jpg", name="ba-hecke-nachher", ver=4 / 5, fokus=(0.5, 0.66)),
     dict(quelle="_work/up/up-ba-grundstueck-vorher.png", name="ba-grundstueck-vorher", ver=4 / 5, fokus=(0.5, 0.5), deckel=1000),
     dict(quelle="_work/up/up-ba-grundstueck-nachher.png", name="ba-grundstueck-nachher", ver=4 / 5, fokus=(0.5, 0.5), deckel=1000),
     # Neu: Formschnitt an der Thuja, während der Arbeit und fertig.
@@ -130,9 +143,16 @@ AUFTRAEGE = [
     dict(quelle="_raw/neu/neu-08.jpg", name="ba-formschnitt-nachher", box=(0.10, 0.0, 1.0, 1.0), ver=4 / 5, fokus=(0.5, 0.49)),
 
     # --- Leistungen (5:4 quer) ---
-    dict(quelle="_work/named/haus-kugeln.jpg", name="haus-kugeln", ver=5 / 4, fokus=(0.5, 0.5)),
-    dict(quelle="_raw/neu/neu-10.jpg", name="hecke-strasse", ver=5 / 4, fokus=(0.5, 0.52)),
-    dict(quelle="_work/named/beet-abend.jpg", name="beet-abend", ver=5 / 4, fokus=(0.5, 0.45)),
+    # Der frisch gemaehte Rasen, dieselbe Anlage wie beim ersten Vergleich,
+    # nur ein paar Wochen spaeter. Dritte Fassung der Quelle: in neu6 ist die
+    # orangefarbene Plane weggeschnitten und das Bild groesser (1233 statt 959
+    # Bildpunkte breit). Der Ausschnitt laesst das rote Geraetehaus weg, der
+    # Fokus bei 0,40 haelt oben noch einen Streifen Haus und Beet im Bild,
+    # damit die Flaeche nicht nur nacktes Gras ist.
+    dict(quelle="_raw/neu6/n6-01.webp", name="rasen-kante", box=(0.0, 0.26, 0.70, 1.0),
+         ver=5 / 4, fokus=(0.5, 0.40)),
+    dict(quelle="_raw/neu2/n2-13.jpg", name="hecke-strassenrand", ver=5 / 4, fokus=(0.5, 0.58)),
+    dict(quelle="_raw/neu2/n2-05.jpg", name="beet-mauer", ver=5 / 4, fokus=(0.5, 0.58)),
     dict(quelle="_work/named/grundstueck-arbeit.jpg", name="grundstueck-arbeit", ver=5 / 4, fokus=(0.5, 0.5)),
     dict(quelle="_work/named/streifen-fertig.jpg", name="streifen-fertig", ver=5 / 4, fokus=(0.5, 0.45)),
 
@@ -142,13 +162,23 @@ AUFTRAEGE = [
     dict(quelle="_work/named/beet-03-fertig.jpg", name="beet-03-fertig", ver=4 / 3, fokus=(0.5, 0.5)),
 
     # --- Wer kommt: Ion von vorn, auf der Treppe, zeigt ins fertige Beet.
-    #     Der Fokus liegt links, damit ihm der 4:5-Beschnitt nicht die Schulter
-    #     abschneidet wie in der ersten Fassung. ---
-    dict(quelle="_work/named/ion-treppe.jpg", name="ion-beet", ver=4 / 5, fokus=(0.0, 0.5)),
+    #     Zweite Quelle derselben Aufnahme, nachgeliefert, weil das Bild am
+    #     Telefon beim Heranziehen weich wurde. Sie ist nicht schaerfer im
+    #     Sinne von mehr Kanten, aber Ion steht deutlich groesser im Bild:
+    #     sein Kopf misst darin rund 130 statt 90 Bildpunkte, also etwa das
+    #     Anderthalbfache an echter Zeichnung auf der Person.
+    #     Beschnitten wird jetzt oben und unten statt seitlich, deshalb
+    #     Fokus 0,62: sonst bleibt zu viel Himmel und die Stufen fallen raus. ---
+    dict(quelle="_raw/neu6/n6-02.webp", name="ion-beet", ver=4 / 5, fokus=(0.5, 0.62)),
 
-    # --- Rundgang: Standbild ist das erste Videobild, damit beim Start
+    # --- Im Einsatz: Standbild ist das erste Videobild, damit beim Start
     #     nichts springt. Der Rahmen ist 9:16, die Datei auch. ---
-    dict(quelle="_review/vf_0.jpg", name="rundgang-standbild", ver=None),
+    dict(quelle="_review/schnitt_0.jpg", name="schnitt-standbild", ver=None),
+    dict(quelle="_review/rundgang_0.jpg", name="rundgang-standbild", ver=None),
+    # Standbild fuer den Hero: exakt das erste Bild von garten-hero.mp4, sonst
+    # springt es in dem Moment, in dem das Video uebernimmt. Quelle ist
+    #   ffmpeg -i site/assets/video/garten-hero.mp4 -frames:v 1 _review/garten_0.jpg
+    dict(quelle="_review/garten_0.jpg", name="garten-standbild", ver=None, breiten=(480,)),
 
     # Nicht eingebunden, aber vorhanden, falls eine Fläche noch ein Bild
     # braucht: _raw/neu/neu-09.jpg (Schnitt aus der Nähe), neu-11.jpg (Leiter

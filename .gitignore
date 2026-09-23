@@ -14,3 +14,9 @@ node_modules/
 
 # Musterseiten fuer Entscheidungen, gehoeren nicht auf den Server
 site/_muster/
+
+# Design-Skills, die nur waehrend der Arbeit im Projekt installiert waren
+# (npx skills add). Werkzeug, nicht Teil der Website.
+.agents/
+.claude/skills/
+skills-lock.json

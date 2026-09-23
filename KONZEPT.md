@@ -2,6 +2,11 @@
 
 Stand: 08.09.2026, vor dem Build. Der Build konsumiert dieses Dokument wörtlich.
 
+> **Achtung, dieses Dokument ist der Stand von vor dem Build.** Farben, Schriften
+> und der Hero haben sich seither zweimal geändert. Was tatsächlich auf der Seite
+> steht, steht in UEBERGABE.md, Abschnitte 5b bis 5d. Dieses Konzept bleibt als
+> Beleg der Herleitung liegen, nicht als Anleitung.
+
 ---
 
 ## Phase 1: Referenzen
@@ -114,7 +119,7 @@ werte ausgelesen. Keine Farbe hier ist geraten.
 | Akzent (Moos) | `#6B6E4F` | Lorbeer und Buchs, gemessen `#6B6E4F` |
 
 **Nachtrag 10.09.2026, das dunkle Band wurde grün.** Der Kunde wollte mehr Grün. Ich
-habe davon abgeraten, Grün zur Flächenfarbe zu machen — Grün auf Grün ist das
+habe davon abgeraten, Grün zur Flächenfarbe zu machen. Grün auf Grün ist das
 Branchenklischee, und die Herleitung oben sagt ausdrücklich, dass das Grün aus den
 Fotos kommt. Der Kompromiss hält beides: die Farbe ist weiterhin **gemessen**, nur aus
 einer anderen Quelle.
@@ -151,7 +156,7 @@ Sie hat eine Breitenachse, mit der ich große Überschriften wirklich schmal set
 wie Beschriftung auf Maschinen und Schildern, und kleine Auszeichnungen normal breit.
 Ein Font, zwei Anmutungen. Im Handwerkssegment praktisch nicht zu sehen.
 
-**Body: Newsreader** (Google Fonts, OFL, variabel)
+**Fassung vom 16.09.2026 überholt. Body: Newsreader** (Google Fonts, OFL, variabel)
 Warme Zeitungsserif mit optischer Größenachse und echter Kursive. Begründung: Ions
 Bilder sind Reportage, kein Katalog. Eine Zeitungsserif erzählt, eine Grotesk listet auf.
 Der Kontrast zur Display-Grotesk ist eindeutig.
@@ -276,3 +281,41 @@ nie lädt.
 Auf zwei Fotos sind fremde Autos mit möglicherweise lesbaren Kennzeichen und fremde
 Hauseingänge zu sehen. Ich prüfe die Auflösung und unkenntliche mache, was lesbar ist.
 Das ist kein Drama, aber es gehört gemacht, bevor die Seite live geht.
+
+
+---
+
+# Nachtrag 18.09.2026: Redesign
+
+Der Kunde hat die vorige Fassung als "billig und nach KI" beurteilt. Der Prüfer
+`npx impeccable detect` hat das bestätigt und benannt, was der Kunde nur gefühlt hat:
+cremefarbener Grund als Reflexgriff, 18 Gedankenstriche im Fließtext, ein farbiger
+Balken an der Kartenkante.
+
+Als Maßstab hat der Kunde zwei Seiten genannt: **superpower.com** und
+**numa.uprock.pro**. Beide wurden aufgerufen und ausgemessen.
+
+| | Superpower | Numa |
+|---|---|---|
+| Schriftfamilien | eine | eine |
+| H1 | 56px, Gewicht 400, Zeilenhöhe 1,0, Laufweite -0,02em | 75px, Zeilenhöhe 0,9, Laufweite -0,04em |
+| Fließtext | 15px | 16px |
+| Größen dazwischen | keine | keine |
+| Untertitel unter Überschriften | ein Satz oder keiner | nie mehr als einer |
+| Farben | fast nur Schwarz und Weiß | fast nur Schwarz und Weiß |
+| Woher die Farbe kommt | aus den Fotos | aus den Fotos |
+| Gliederungsmittel | 01/02/03 mit Haarlinien | Riesenzahlen als Überschrift |
+
+**Übernommen:** der Größensprung, die Untertitel-Diät, die Reduktion auf eine
+Schriftfamilie plus eine Mono für Auszeichnungen, die Zahl als Gestaltungsmittel.
+
+**Nicht übernommen:** die weiße Galerieoptik. Ion arbeitet draußen im Grün. Eine
+Laborseite wäre für ihn falsch, deshalb trägt Dunkelgrün die Seite und die Fotos
+bringen das Licht.
+
+**Die These:** Ion richtet Kanten. Die Seite führt das vor, statt es zu behaupten.
+Der Hero ist eine Schnittanimation aus zwei echten Aufnahmen derselben Hecke.
+
+**Was gestrichen wurde:** alle sieben vom Kunden markierten Untertitel, die
+Fließtexte in den sechs Leistungskarten, die schräge Materialkante zwischen allen
+Bändern, drei von vier Akzentfarben, zwei von drei Serifen.

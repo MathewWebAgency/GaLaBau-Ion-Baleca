@@ -1,4 +1,4 @@
-/* Gartenpflege Maria MD · Ion Baleca
+/* Gartenprofi Baleca · Ion Baleca
    Bewegung: nur da, wo sie etwas trägt. Alles andere bleibt still. */
 (function () {
   'use strict';
@@ -60,111 +60,163 @@
     kandidaten.forEach(function (el) { io.observe(el); });
   })();
 
-  /* ============================== Hero ================================== */
-  (function heroKante() {
-    var hero = document.getElementById('top');
-    if (!hero) return;
-    var bahn = hero.querySelector('.hero__bild');
-    var setzen = function (v) { hero.style.setProperty('--w', v.toFixed(4)); };
-
-    // Während die Bahn breiter wird, rechnet der Bildausschnitt neu: das Foto
-    // wird auf die Breite skaliert, dadurch wandert oben etwas aus dem Rahmen —
-    // und oben steht der Mann auf der Leiter. Deshalb wandert der Bildpunkt
-    // gegenläufig nach oben, damit er im Bild bleibt.
-    var AUSSCHNITT_RUHE = 34;
-    var AUSSCHNITT_OFFEN = 2;
-    var ausschnitt = function (t) {
-      hero.style.setProperty('--oy', (AUSSCHNITT_RUHE + (AUSSCHNITT_OFFEN - AUSSCHNITT_RUHE) * t).toFixed(1) + '%');
-    };
-
-    // Auf schmalen Geräten liegt die Kante waagerecht. Sie darf nie in den Text
-    // laufen, deshalb wird sie am tatsächlichen Inhalt gemessen statt geraten.
-    var ruheWert = function () {
-      if (window.matchMedia('(min-width: 861px)').matches) return 0.62;
-      var cta = hero.querySelector('.hero__cta');
-      if (!cta) return 0.7;
-      var unten = cta.getBoundingClientRect().bottom - hero.getBoundingClientRect().top;
-      // Die Kante fällt nach links um 7vh ab, dieser Betrag muss oben drauf.
-      var schraege = window.innerHeight * 0.07;
-      return Math.max(0.5, Math.min(0.84, (unten + schraege + 26) / hero.offsetHeight));
-    };
-    var ruhe = ruheWert();
-    setzen(ruhe);
-
-    if (istRuhig() || !hatGsap) return;
-
-    // Die Einblendung läuft in CSS und braucht kein JavaScript. Das Scrollen
-    // übernimmt erst, wenn sie fertig ist oder der Besucher vorher scrollt.
-    var uebernommen = false;
-    var uebernehmen = function () {
-      if (uebernommen) return;
-      uebernommen = true;
-      hero.classList.add('uebernommen', 'bewegt');
-    };
-    if (bahn) bahn.addEventListener('animationend', uebernehmen, { once: true });
-    setTimeout(uebernehmen, 1600);
-
-    ScrollTrigger.create({
-      trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.6,
-      onUpdate: function (s) {
-        if (s.progress > 0.002) uebernehmen();
-        if (!uebernommen) return;
-        setzen(ruhe - s.progress * (ruhe - 0.06));
-        ausschnitt(s.progress);
-      }
-    });
-
-    var timer;
-    window.addEventListener('resize', function () {
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        ruhe = ruheWert();
-        if (window.scrollY < 4) setzen(ruhe);
-        ScrollTrigger.refresh();
-      }, 180);
-    });
-  })();
-
-  /* ===================== Bewegtbild im Hero ============================= */
-  /* Ions eigene Aufnahme, tonlos und als Schleife. Sie lädt bewusst spät und
-     nur dort, wo sie etwas bringt: das Standbild trägt den ersten Bildaufbau,
-     auf schmalen Geräten bleibt es dabei, und wer Datensparen eingeschaltet hat
-     oder wenig Bewegung möchte, bekommt sie gar nicht erst. */
-  (function heroBewegt() {
+  /* ============================== Hero ==================================
+     Der Garten laeuft von selbst, tonlos, als Schleife. Er laedt bewusst
+     spaet: das Standbild traegt den ersten Bildaufbau, und wer Datensparen
+     eingeschaltet hat, in einem langsamen Netz haengt oder wenig Bewegung
+     moechte, bekommt das Standbild und sonst nichts. */
+  (function heroFilm() {
+    var QUELLE = 'assets/video/garten-hero.mp4';
     var video = document.getElementById('hero-video');
-    if (!video) return;
+    var hero = document.getElementById('top');
+    if (!video || !hero) return;
     if (istRuhig()) return;
-    if (!window.matchMedia('(min-width: 861px)').matches) return;
 
     var netz = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (netz && (netz.saveData || /(^|-)2g$/.test(netz.effectiveType || ''))) return;
 
+    var still = hero.querySelector('.hero__still');
     var laeuft = false;
+
+    // Ein abgelehntes play() darf nicht das Ende sein. Manche Geraete
+    // verweigern das selbsttaetige Abspielen, iPhones im Stromsparmodus zum
+    // Beispiel. Dann bleibt das Standbild stehen, und beim ersten Antippen
+    // oder Scrollen wird es noch einmal versucht. Ohne das saehe ein Teil der
+    // Besucher den Garten nie laufen, ohne dass es je auffiele.
+    var wartetAufTipp = false;
+    var beimNaechstenTipp = function (nochmal) {
+      if (wartetAufTipp) return;
+      wartetAufTipp = true;
+      var los = function () {
+        wartetAufTipp = false;
+        document.removeEventListener('pointerdown', los);
+        document.removeEventListener('touchstart', los);
+        window.removeEventListener('scroll', los);
+        nochmal();
+      };
+      document.addEventListener('pointerdown', los, { passive: true });
+      document.addEventListener('touchstart', los, { passive: true });
+      window.addEventListener('scroll', los, { passive: true });
+    };
+
     var anwerfen = function () {
       if (laeuft) return;
       laeuft = true;
-      video.src = 'assets/video/rundgang-hero.mp4';
+      video.src = QUELLE;
       video.addEventListener('playing', function () {
         video.classList.add('laeuft');
+        // Das Standbild bleibt darunter liegen, es kostet nichts mehr und
+        // deckt den Moment ab, in dem die Schleife neu ansetzt.
       }, { once: true });
+
       var versuch = video.play();
       if (versuch && versuch.catch) {
-        // Lehnt der Browser das Abspielen ab, bleibt einfach das Standbild stehen.
-        versuch.catch(function () { video.removeAttribute('src'); video.load(); });
+        versuch.catch(function () {
+          video.removeAttribute('src');
+          video.load();
+          laeuft = false;
+          beimNaechstenTipp(anwerfen);
+        });
       }
     };
 
-    var starten = function () { window.setTimeout(anwerfen, 700); };
+    var starten = function () { window.setTimeout(anwerfen, 600); };
     if (document.readyState === 'complete') starten();
     else window.addEventListener('load', starten, { once: true });
 
-    // Ausserhalb des Bildes braucht niemand ein laufendes Video.
-    var io = new IntersectionObserver(function (eintraege) {
+    // Ausserhalb des Bildes rechnet niemand gern weiter.
+    var imBild = true;
+    var io = new IntersectionObserver(function (e) {
+      imBild = e[0].isIntersecting;
       if (!laeuft) return;
-      if (eintraege[0].isIntersecting) video.play().catch(function () {});
+      if (imBild) video.play().catch(function () {});
       else video.pause();
     }, { threshold: 0.05 });
-    io.observe(video);
+    io.observe(hero);
+
+    // Der Browser haelt das Video an, sobald der Tab in den Hintergrund
+    // geht, und startet es von allein nicht wieder. Der Beobachter oben
+    // merkt davon nichts, weil sich am Bildausschnitt nichts aendert: wer
+    // zurueckkommt, sieht dann ein Standbild und haelt es fuer kaputt.
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState !== 'visible') return;
+      if (!laeuft || !imBild) return;
+      if (video.paused) video.play().catch(function () {});
+    });
+  })();
+
+  /* ========================== Laufband =================================
+     Ion faehrt die Region ab, also laeuft die Leiste.
+
+     Vorher lief sie als CSS-Animation und das Scrollen hat die
+     animation-duration verkuerzt. Das ist falsch: der Browser rechnet den
+     Fortschritt aus verstrichener Zeit geteilt durch Dauer, eine halbierte
+     Dauer verdoppelt den Fortschritt also augenblicklich und die Leiste
+     springt quer ueber den Bildschirm. Deshalb rechnet die Position jetzt
+     selbst, Bild fuer Bild, und die Geschwindigkeit darf sich stetig aendern,
+     ohne dass die Position einen Sprung macht. */
+  (function laufband() {
+    var zug = document.querySelector('.laufband__zug');
+    if (!zug || istRuhig()) return;
+
+    var GRUND = 26;          // Bildpunkte je Sekunde in Ruhe
+    var MAX   = 3;           // hoechstens dreifaches Tempo beim Scrollen
+    var strecke = 0, tempo = 1, ziel = 1, letzteZeit = 0, letzterY = window.scrollY;
+    var halbe = 0;
+
+    var messen = function () {
+      // Die Ortsliste steht zweimal im Zug. Eine Haelfte ist die Strecke,
+      // nach der sich das Bild exakt wiederholt.
+      halbe = zug.scrollWidth / 2;
+    };
+    messen();
+
+    // Anhalten, solange jemand liest oder mit der Tastatur darin steht.
+    var pause = false;
+    var band = zug.closest('.laufband');
+    if (band) {
+      ['pointerenter','focusin'].forEach(function (ev) {
+        band.addEventListener(ev, function () { pause = true; });
+      });
+      ['pointerleave','focusout'].forEach(function (ev) {
+        band.addEventListener(ev, function () { pause = false; });
+      });
+    }
+
+    var laeuft = false;
+    var schritt = function (jetzt) {
+      requestAnimationFrame(schritt);
+      if (!letzteZeit || pause) { letzteZeit = jetzt; return; }
+      var dt = Math.min(0.05, (jetzt - letzteZeit) / 1000);
+      letzteZeit = jetzt;
+
+      tempo += (ziel - tempo) * Math.min(1, dt * 6);
+      ziel  += (1 - ziel) * Math.min(1, dt * 2.5);
+
+      strecke += GRUND * tempo * dt;
+      if (halbe > 0 && strecke >= halbe) strecke -= halbe;
+      zug.style.transform = 'translate3d(' + (-strecke).toFixed(2) + 'px,0,0)';
+    };
+
+    var starten = function () {
+      if (laeuft) return;
+      laeuft = true;
+      requestAnimationFrame(schritt);
+    };
+
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      ziel = Math.min(MAX, 1 + Math.abs(y - letzterY) / 90);
+      letzterY = y;
+    }, { passive: true });
+
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t); t = setTimeout(messen, 200);
+    });
+
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(messen);
+    starten();
   })();
 
   /* ========================= Fotos anhängen ============================= */
@@ -347,46 +399,51 @@
     });
   })();
 
-  /* ============================= Rundgang =============================== */
-  (function rundgang() {
-    var video = document.getElementById('rundgang-video');
-    var standbild = document.getElementById('rundgang-standbild');
-    var knopf = document.getElementById('videoknopf');
-    var text = document.getElementById('videoknopf-text');
-    if (!video || !knopf || !text) return;
+  /* ============================== Filme ================================= */
+  /* Zwei Aufnahmen, dieselbe Mechanik: das Standbild trägt den Aufbau, das
+     Video wird erst geladen, wenn jemand es sehen will, und pausiert wieder,
+     sobald es aus dem Bild scrollt. */
+  (function filme() {
+    var rahmen = document.querySelectorAll('[data-film]');
+    if (!rahmen.length) return;
 
-    var geladen = false;
-    var laden = function () {
-      if (geladen) return;
-      geladen = true;
-      video.src = 'assets/video/rundgang.mp4';
-      video.addEventListener('playing', function () {
-        if (standbild) standbild.style.opacity = '0';
-      }, { once: true });
-    };
+    Array.prototype.forEach.call(rahmen, function (figur) {
+      var video = figur.querySelector('.film__video');
+      var standbild = figur.querySelector('.film__still');
+      var knopf = figur.querySelector('.videoknopf');
+      if (!video || !knopf) return;
+      var text = knopf.querySelector('span');
 
-    var setzeKnopf = function (laeuft) {
-      text.textContent = laeuft ? 'Anhalten' : 'Abspielen';
-      knopf.setAttribute('aria-pressed', String(laeuft));
-    };
+      var geladen = false;
+      var laden = function () {
+        if (geladen) return;
+        geladen = true;
+        video.src = video.getAttribute('data-quelle');
+        video.addEventListener('playing', function () {
+          if (standbild) standbild.style.opacity = '0';
+        }, { once: true });
+      };
 
-    knopf.addEventListener('click', function () {
-      laden();
-      if (video.paused) { video.play().then(function(){ setzeKnopf(true); }).catch(function(){}); }
-      else { video.pause(); setzeKnopf(false); }
+      var setzeKnopf = function (laeuft) {
+        if (text) text.textContent = laeuft ? 'Anhalten' : 'Abspielen';
+        knopf.setAttribute('aria-pressed', String(laeuft));
+      };
+
+      knopf.addEventListener('click', function () {
+        laden();
+        if (video.paused) { video.play().then(function () { setzeKnopf(true); }).catch(function () {}); }
+        else { video.pause(); setzeKnopf(false); }
+      });
+      video.addEventListener('pause', function () { setzeKnopf(false); });
+      video.addEventListener('play', function () { setzeKnopf(true); });
+
+      // Aus dem Bild heraus wird angehalten, damit nie zwei gleichzeitig laufen
+      // und das Handy nicht umsonst rechnet.
+      var io = new IntersectionObserver(function (eintraege) {
+        if (!eintraege[0].isIntersecting && !video.paused) video.pause();
+      }, { threshold: 0.35 });
+      io.observe(figur);
     });
-    video.addEventListener('pause', function () { setzeKnopf(false); });
-    video.addEventListener('play', function () { setzeKnopf(true); });
-
-    // Von selbst anlaufen, sobald man da ist. Nur auf Geräten, wo das nicht stört.
-    if (istRuhig()) return;
-    var io = new IntersectionObserver(function (eintraege) {
-      if (!eintraege[0].isIntersecting) { if (!video.paused) video.pause(); return; }
-      if (navigator.connection && navigator.connection.saveData) return;
-      laden();
-      video.play().then(function(){ setzeKnopf(true); }).catch(function () { /* Autoplay abgelehnt, Knopf bleibt */ });
-    }, { threshold: 0.5 });
-    io.observe(video.parentElement);
   })();
 
   /* ============================== Formular ============================== */

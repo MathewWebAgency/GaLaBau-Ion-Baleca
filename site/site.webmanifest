@@ -1,10 +1,10 @@
 {
-  "name": "Gartenpflege Maria MD",
-  "short_name": "Maria MD",
+  "name": "Gartenprofi Baleca",
+  "short_name": "Baleca",
   "start_url": "/",
   "display": "browser",
-  "background_color": "#DCDED6",
-  "theme_color": "#2E211D",
+  "background_color": "#F1ECDE",
+  "theme_color": "#0C2E1F",
   "icons": [
     { "src": "/assets/icon/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/assets/icon/icon-512.png", "sizes": "512x512", "type": "image/png" },

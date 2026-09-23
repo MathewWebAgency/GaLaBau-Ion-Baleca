@@ -1,4 +1,8 @@
-# Gartenpflege Maria MD · Ion Baleca
+# Gartenprofi Baleca · Ion Baleca
+
+Die Seite spricht den Leser mit **Du** an.
+
+(rechtlich: Gartenpflege Maria MD, siehe Impressum)
 
 Website für einen Gartenpflegebetrieb im Raum Koblenz. Statisches HTML, CSS und
 Vanilla JavaScript, kein Framework, kein Build-Schritt.
@@ -25,9 +29,16 @@ selbst. `index.html` liegt danach direkt unter `/`.
 
 ## Technik
 
-- Zwei Schriften, lokal als woff2, auf den deutschen Zeichensatz reduziert, 164 KB
-  gesamt: **Archivo** für Überschriften, Auszeichnungen und Zahlen, **Newsreader**
-  für den Fließtext. Keine Verbindung zu Google Fonts.
+- Zwei Schriften, lokal als woff2, auf den deutschen Zeichensatz reduziert, 56 KB
+  gesamt: **Sentient** für Überschriften, **Supreme** für Fließtext und
+  Auszeichnungen. Keine Verbindung zu Google Fonts.
+- Farben aus der Fahrzeugbeschriftung gemessen: Dunkelgrün `#0C2E1F` trägt die
+  ganze Seite, Gelb `#F2B623` ist der einzige Akzent, hell ist `#E9EBE4`.
+- Der Hero ist eine tonlose Videoschleife aus einem fertigen Garten, die
+  vollflächig hinter Satz und Knoepfen läuft. Es gibt zwei Fassungen der
+  Datei, hochkant fürs Telefon und quer für den Schirm. Welche geladen
+  wird, entscheidet `heroFilm()` in `site.js`. Details in UEBERGABE.md,
+  Abschnitt 5e.
 - GSAP mit ScrollTrigger, lokal eingebunden.
 - Keine Cookies, keine Reichweitenmessung, keine externen Einbindungen.
 - Alle Bilder in vier Größen als WebP, gebaut mit `python3 .claude/bilder.py`.
