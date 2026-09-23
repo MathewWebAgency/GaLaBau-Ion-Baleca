@@ -17,6 +17,13 @@ DirectoryIndex index.html
   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 </IfModule>
 
+# --- Protokolldatei des Veroeffentlichens nicht ausliefern ---
+# Der GitHub-Ablauf legt sie im Webverzeichnis ab. Sie enthaelt nur
+# Dateinamen und Pruefsummen, gehoert aber trotzdem nicht ins Netz.
+<Files ".ftp-deploy-sync-state.json">
+  Require all denied
+</Files>
+
 # --- Eigene Fehlerseite ---
 ErrorDocument 404 /404.html
 
@@ -37,16 +44,26 @@ ErrorDocument 404 /404.html
   ExpiresByType text/html                 "access plus 0 seconds"
   ExpiresByType text/css                  "access plus 1 year"
   ExpiresByType application/javascript    "access plus 1 year"
-  ExpiresByType image/webp                "access plus 1 year"
-  ExpiresByType image/jpeg                "access plus 1 year"
-  ExpiresByType image/png                 "access plus 1 year"
-  ExpiresByType image/svg+xml             "access plus 1 year"
+  ExpiresByType image/webp                "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
   ExpiresByType font/woff2                "access plus 1 year"
-  ExpiresByType video/mp4                 "access plus 1 year"
+  ExpiresByType video/mp4                 "access plus 1 month"
 </IfModule>
 <IfModule mod_headers.c>
-  <FilesMatch "\.(css|js|webp|jpg|jpeg|png|svg|woff2|mp4)$">
+  # CSS und JS tragen in den HTML-Dateien eine Versionsnummer (?v=JJJJMMTT).
+  # Nur deshalb duerfen sie ein Jahr lang als unveraenderlich gelten: bei
+  # jeder Aenderung die Nummer in allen vier HTML-Dateien hochzaehlen, sonst
+  # sehen wiederkehrende Besucher die alte Fassung. Schriften aendern sich nie.
+  <FilesMatch "\.(css|js|woff2)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Bilder und Videos werden beim Tauschen unter demselben Namen ueberschrieben
+  # (so ist schon das Rasenbild dreimal getauscht worden). Deshalb nur 30 Tage
+  # und ohne immutable, dann kommt ein neues Bild spaetestens nach einem Monat an.
+  <FilesMatch "\.(webp|jpg|jpeg|png|svg|mp4)$">
+    Header set Cache-Control "public, max-age=2592000"
   </FilesMatch>
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache, must-revalidate"

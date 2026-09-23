@@ -57,6 +57,44 @@ eingetragen. Wenn nicht, in diesen Dateien anpassen:
 - `robots.txt`: die Sitemap-Adresse
 - `sitemap.xml`: die `<loc>`-Adresse
 
+### Zwei Wege nach oben
+
+**A. Von Hand, einmalig.** Das fertige Paket liegt unter
+`_upload/gartenprofi-baleca-website.zip` (82 Dateien, 13 MB, `index.html` an der
+Wurzel, `.htaccess` dabei, Rechte schon auf 644). In hPanel > Dateimanager >
+`public_html` hochladen und dort entpacken. Neu erzeugen, nachdem sich etwas an
+`site/` geaendert hat: der Python-Block dazu steht im Verlauf vom 23.09.2026, im
+Kern `zipfile` ueber `site/` ohne `_muster` und `.DS_Store`.
+
+**B. Per Knopf aus GitHub.** `.github/workflows/veroeffentlichen.yml` laedt den
+Inhalt von `site/` per FTP hoch. Einmalig unter Settings > Secrets and variables >
+Actions die drei Secrets `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD` anlegen
+(stehen in hPanel > Dateien > FTP-Konten). Danach unter Actions >
+"Auf Hostinger veröffentlichen" > Run workflow.
+
+- Er laeuft **nur auf Knopfdruck**, nie bei einem Push von selbst.
+- Er **bricht ab, solange irgendwo `data-todo` steht**. Wer trotzdem
+  veroeffentlichen will, setzt beim Start bewusst den Haken "trotz Platzhaltern".
+- Er **loescht auf dem Server nichts**. Alte WordPress-Dateien bleiben, bis jemand
+  sie in hPanel entfernt. Die neue Seite gewinnt trotzdem, weil die `.htaccess`
+  `DirectoryIndex index.html` setzt. Die Reste sollten aber weg: ein
+  verwaistes `wp-login.php` mit alten Plugins ist ein Einfallstor.
+- Zielordner ist `public_html/`. Liegt der FTP-Zugang schon direkt in
+  `public_html`, die Variable `FTP_ZIELORDNER` auf `./` setzen.
+- Protokoll ist `ftps`. Scheitert die Verbindung daran, `FTP_PROTOKOLL` auf `ftp`.
+
+### Zwischenspeicher und Versionsnummern
+
+CSS und JS werden ein Jahr lang als unveraenderlich zwischengespeichert. Das geht
+nur, weil sie in den HTML-Dateien eine Versionsnummer tragen: `site.css?v=20260923`.
+**Bei jeder Aenderung an `site.css` oder `site.js` die Nummer in allen vier
+HTML-Dateien hochzaehlen**, sonst sehen wiederkehrende Besucher bis zu einem Jahr
+lang die alte Fassung. Das gilt auch fuer das Eintragen der Formspree-Kennung.
+
+Vorher stand das so ohne Versionsnummer in der `.htaccess`, und auch Bilder und
+Videos waren ein Jahr unveraenderlich, obwohl sie unter gleichem Namen getauscht
+werden. Bilder und Videos gelten jetzt 30 Tage.
+
 Danach hochladen. **Der Inhalt von `site/` kommt in das Wurzelverzeichnis der Domain**,
 nicht der Ordner selbst. Also `index.html` liegt direkt unter `/`, nicht unter `/site/`.
 Das ist wichtig, weil die 404-Seite mit wurzelabsoluten Pfaden arbeitet.

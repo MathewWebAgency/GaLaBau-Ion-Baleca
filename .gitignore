@@ -20,3 +20,6 @@ site/_muster/
 .agents/
 .claude/skills/
 skills-lock.json
+
+# Fertiges Upload-Paket fuer den hPanel-Dateimanager, wird aus site/ erzeugt
+_upload/
