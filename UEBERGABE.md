@@ -77,9 +77,12 @@ eingetragen. Wenn nicht, in diesen Dateien anpassen:
 **A. Von Hand, einmalig.** Das fertige Paket liegt unter
 `_upload/gartenprofi-baleca-website.zip` (82 Dateien, 13 MB, `index.html` an der
 Wurzel, `.htaccess` dabei, Rechte schon auf 644). In hPanel > Dateimanager >
-`public_html` hochladen und dort entpacken. Neu erzeugen, nachdem sich etwas an
-`site/` geaendert hat: der Python-Block dazu steht im Verlauf vom 23.09.2026, im
-Kern `zipfile` ueber `site/` ohne `_muster` und `.DS_Store`.
+`public_html` hochladen und dort entpacken, Zielfeld im Entpack-Dialog leer
+lassen, ZIP danach loeschen. Zweimal ist die Seite in `public_html/site/`
+gelandet, Folge war 403 an der Wurzel. Neu erzeugen und nach dem Upload pruefen
+mit dem globalen Skill `hostinger-upload`:
+`python3 ~/.claude/skills/hostinger-upload/scripts/baue_zip.py site _upload/gartenprofi-baleca-website.zip`
+und `~/.claude/skills/hostinger-upload/scripts/pruefe_live.sh https://deeppink-sparrow-800217.hostingersite.com`.
 
 **B. Per Knopf aus GitHub.** `.github/workflows/veroeffentlichen.yml` laedt den
 Inhalt von `site/` per FTP hoch. Einmalig unter Settings > Secrets and variables >
