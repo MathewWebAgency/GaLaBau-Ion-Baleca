@@ -30,7 +30,7 @@
 <link rel="preload" as="image" href="assets/img/garten-standbild.webp"
       imagesrcset="assets/img/garten-standbild-480.webp 480w, assets/img/garten-standbild.webp 720w"
       imagesizes="(min-width:861px) 58vh, 100vw" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/site.css?v=20260924">
+<link rel="stylesheet" href="assets/css/site.css?v=20260925">
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -79,6 +79,10 @@
            fetchpriority="high" decoding="async" alt="">
       <video class="hero__video" id="hero-video" muted playsinline loop preload="none"
              tabindex="-1"></video>
+      <script>/* Startet das Video, sobald der Browser hier ankommt, statt erst nach allen Bildern und Schriften. */
+      (function(){var v=document.getElementById('hero-video'),n=navigator.connection;
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches||(n&&(n.saveData||/(^|-)2g$/.test(n.effectiveType||''))))return;
+      v.preload='auto';v.src='assets/video/garten-hero.mp4';var p=v.play();if(p&&p.catch)p.catch(function(){});})();</script>
     </div>
   </div>
   <div class="hero__schleier" aria-hidden="true"></div>
@@ -323,7 +327,7 @@
           <img class="film__still" src="assets/img/schnitt-standbild.webp" srcset="assets/img/schnitt-standbild-480.webp 480w, assets/img/schnitt-standbild.webp 576w" sizes="(min-width:900px) 34vw, 92vw" width="576" height="1024" loading="lazy" decoding="async" alt="Standbild: Ion Baleca sägt einen Baumstumpf bodengleich ab">
           <video class="film__video" data-quelle="assets/video/schnitt.mp4" muted playsinline loop preload="none"
                  aria-label="Ion Baleca sägt einen Baumstumpf ab, Aufnahme ohne Ton"></video>
-          <button class="videoknopf" type="button" aria-pressed="false"><span>Abspielen</span></button>
+          <button class="videoknopf" type="button" aria-pressed="false" aria-label="Video abspielen"><span class="videoknopf__kreis" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor"/></svg></span></button>
         </div>
       </figure>
     </div>
@@ -608,6 +612,6 @@
 
 <script src="assets/js/gsap.min.js" defer></script>
 <script src="assets/js/ScrollTrigger.min.js" defer></script>
-<script src="assets/js/site.js?v=20260924" defer></script>
+<script src="assets/js/site.js?v=20260925" defer></script>
 </body>
 </html>

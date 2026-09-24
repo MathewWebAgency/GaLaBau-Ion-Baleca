@@ -102,12 +102,13 @@
     var anwerfen = function () {
       if (laeuft) return;
       laeuft = true;
-      video.src = QUELLE;
-      video.addEventListener('playing', function () {
-        video.classList.add('laeuft');
-        // Das Standbild bleibt darunter liegen, es kostet nichts mehr und
-        // deckt den Moment ab, in dem die Schleife neu ansetzt.
-      }, { once: true });
+      // Meist hat das kleine Script direkt am Video die Quelle schon gesetzt
+      // und das Laden laeuft. Dann nicht noch einmal von vorn anfangen.
+      if (!video.getAttribute('src')) { video.preload = 'auto'; video.src = QUELLE; }
+      // Das Standbild bleibt darunter liegen, es kostet nichts mehr und
+      // deckt den Moment ab, in dem die Schleife neu ansetzt.
+      if (!video.paused && video.readyState >= 3) video.classList.add('laeuft');
+      else video.addEventListener('playing', function () { video.classList.add('laeuft'); }, { once: true });
 
       var versuch = video.play();
       if (versuch && versuch.catch) {
@@ -120,9 +121,9 @@
       }
     };
 
-    var starten = function () { window.setTimeout(anwerfen, 600); };
-    if (document.readyState === 'complete') starten();
-    else window.addEventListener('load', starten, { once: true });
+    // Sofort, nicht erst nach dem load-Ereignis: das wartete auf jedes Bild
+    // und jede Schrift, und das Video kam auf jedem Geraet spuerbar spaet.
+    anwerfen();
 
     // Ausserhalb des Bildes rechnet niemand gern weiter.
     var imBild = true;
@@ -412,21 +413,23 @@
       var standbild = figur.querySelector('.film__still');
       var knopf = figur.querySelector('.videoknopf');
       if (!video || !knopf) return;
-      var text = knopf.querySelector('span');
-
       var geladen = false;
       var laden = function () {
         if (geladen) return;
         geladen = true;
+        video.preload = 'auto';
         video.src = video.getAttribute('data-quelle');
         video.addEventListener('playing', function () {
           if (standbild) standbild.style.opacity = '0';
         }, { once: true });
       };
 
+      // Der Knopf liegt als Flaeche ueber dem ganzen Video: antippen spielt ab,
+      // nochmal antippen haelt an. Waehrend es laeuft, ist das Dreieck weg.
       var setzeKnopf = function (laeuft) {
-        if (text) text.textContent = laeuft ? 'Anhalten' : 'Abspielen';
         knopf.setAttribute('aria-pressed', String(laeuft));
+        knopf.setAttribute('aria-label', laeuft ? 'Video anhalten' : 'Video abspielen');
+        figur.classList.toggle('laeuft', laeuft);
       };
 
       knopf.addEventListener('click', function () {
@@ -443,6 +446,17 @@
         if (!eintraege[0].isIntersecting && !video.paused) video.pause();
       }, { threshold: 0.35 });
       io.observe(figur);
+
+      // Schon laden, wenn das Video noch gut eine Bildschirmhoehe entfernt ist.
+      // Beim Antippen ist es dann da, statt erst dann anzufangen.
+      var vorab = new IntersectionObserver(function (eintraege) {
+        if (!eintraege[0].isIntersecting) return;
+        vorab.disconnect();
+        var n = navigator.connection;
+        if (n && n.saveData) return;
+        laden();
+      }, { rootMargin: '100% 0px 100% 0px' });
+      vorab.observe(figur);
     });
   })();
 

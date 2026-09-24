@@ -332,7 +332,7 @@ a{color:inherit}
 }
 .hero__wand{display:none}
 .hero__still{transition:opacity 700ms var(--ease-out)}
-.hero__video{opacity:0;transition:opacity 900ms var(--ease-out)}
+.hero__video{opacity:0;transition:opacity 450ms var(--ease-out)}
 .hero__video.laeuft{opacity:1}
 
 /* Zwei Verlaeufe uebereinander. Der erste traegt die Schrift links, der
@@ -746,16 +746,26 @@ a{color:inherit}
 .band--dunkel .film figcaption{color:var(--kalk-leise)}
 .band--dunkel .film figcaption b{color:var(--kalk)}
 
+/* Play-Knopf mittig auf dem Video. Die Schaltflaeche ist das ganze Bild,
+   so trifft jeder Tipp, sichtbar ist nur der Kreis. */
 .videoknopf{
-  position:absolute;right:.8rem;bottom:.8rem;z-index:2;
-  display:inline-flex;align-items:center;gap:.5rem;
-  font-family:var(--auszeichnung);font-size:.82rem;font-weight:500;letter-spacing:.03em;
-  background:rgba(8,26,17,.84);color:var(--kalk);border:1px solid rgba(244,246,241,.32);
-  padding:.7rem 1.1rem;cursor:pointer;min-height:44px;border-radius:999px;
-  transition:background-color 180ms var(--ease-out),transform 140ms var(--ease-out);
+  position:absolute;inset:0;z-index:2;display:grid;place-items:center;
+  background:none;border:0;padding:0;cursor:pointer;color:var(--kalk);
+  -webkit-tap-highlight-color:transparent;
 }
-.videoknopf:active{transform:scale(.98)}
-@media (hover:hover) and (pointer:fine){ .videoknopf:hover{background:rgba(8,26,17,.96)} }
+.videoknopf__kreis{
+  display:grid;place-items:center;width:76px;height:76px;border-radius:50%;
+  background:rgba(8,26,17,.5);border:1px solid rgba(244,246,241,.45);
+  box-shadow:0 8px 28px rgba(8,26,17,.28);
+  transition:opacity 220ms var(--ease-out),transform 160ms var(--ease-out),background-color 180ms var(--ease-out);
+}
+/* Das Dreieck optisch mittig: geometrisch mittig wirkt es nach links verschoben. */
+.videoknopf__kreis svg{margin-left:4px}
+.videoknopf:active .videoknopf__kreis{transform:scale(.94)}
+@media (hover:hover) and (pointer:fine){ .videoknopf:hover .videoknopf__kreis{background:rgba(8,26,17,.68)} }
+.film.laeuft .videoknopf__kreis{opacity:0;transform:scale(.9)}
+.videoknopf:focus-visible{outline:none}
+.videoknopf:focus-visible .videoknopf__kreis{outline:2px solid var(--gelb);outline-offset:3px}
 
 /* ---------- Einwände ---------- */
 .einwaende{display:grid;gap:clamp(1.6rem,4vw,3.5rem);align-items:start}
