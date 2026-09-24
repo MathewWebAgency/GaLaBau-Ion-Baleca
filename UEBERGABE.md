@@ -58,6 +58,13 @@ verschickt es nichts und weist die Besucher ehrlich auf Telefon und E-Mail hin.
 
 ## 3. Domain und Deploy
 
+> **Stand 24.09.2026:** Canonical, `og:url`, `og:image`, JSON-LD, `robots.txt` und
+> `sitemap.xml` zeigen vorerst auf die provisorische Hostinger-Adresse
+> `https://deeppink-sparrow-800217.hostingersite.com`. Beim Umzug auf die echte
+> Domain diese zehn Stellen zurückstellen (Suchen und Ersetzen der Adresse in
+> `index.html`, `robots.txt`, `sitemap.xml`) und die provisorische Adresse per
+> 301 auf die echte umleiten.
+
 **Wenn die Domain `gartenpflege-maria-md.de` bleibt**, ist alles schon richtig
 eingetragen. Wenn nicht, in diesen Dateien anpassen:
 

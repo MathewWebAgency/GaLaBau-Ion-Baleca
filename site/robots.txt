@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 
-Sitemap: https://gartenpflege-maria-md.de/sitemap.xml
+Sitemap: https://deeppink-sparrow-800217.hostingersite.com/sitemap.xml
