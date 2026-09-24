@@ -498,6 +498,13 @@ a{color:inherit}
   .hero__marke img{height:46px}
   .hero__marke span{font-size:.94rem}
 }
+/* Auf dem Tablet hochkant liefen beide Knoepfe ueber die volle Breite,
+   gut 700 Bildpunkte fuer zwei Worte. Ab 600 passen sie nebeneinander,
+   die Nummer bricht dort nicht mehr um. */
+@media (min-width:600px) and (max-width:860px){
+  .hero__cta{flex-direction:row;align-items:center}
+  .hero__cta .btn{width:auto}
+}
 
 /* ---------- Laufband Einzugsgebiet ----------
    Ion fährt die Region ab, also läuft die Leiste. Sie wandert von allein und
@@ -931,7 +938,7 @@ a{color:inherit}
 .fuss__unten{
   margin-top:clamp(2rem,4vw,3rem);padding-top:1.3rem;
   border-top:1px solid rgba(244,246,241,.18);
-  display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:space-between;
+  display:flex;gap:1.2rem;flex-wrap:wrap;justify-content:space-between;align-items:center;
   font-size:.86rem;
 }
 
@@ -1007,7 +1014,6 @@ mark.platzhalter{
 .direkt__schl{margin-bottom:.5rem;color:var(--kalk-leise);
   font-family:var(--auszeichnung);font-size:.86rem;font-weight:600}
 .direkt__zeile{margin-top:.5rem;font-size:1rem}
-.einwaende__hinweis{margin-top:1.2rem}
 .formular__recht{font-size:.94rem}
 .formular__recht a{display:inline-block;padding-block:.62rem}
 .band--knapp{padding-top:clamp(3rem,6vw,5rem)}
