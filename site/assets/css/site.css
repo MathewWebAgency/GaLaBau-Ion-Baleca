@@ -761,8 +761,9 @@ a{color:inherit}
   box-shadow:0 6px 22px rgba(8,26,17,.35);
   transition:opacity 220ms var(--ease-out),transform 160ms var(--ease-out);
 }
-/* Das Dreieck optisch mittig: geometrisch mittig wirkt es nach links verschoben. */
-.videoknopf__kreis svg{display:block;width:28px;height:28px;margin-left:3px}
+/* Die Grafik ist schon so gezeichnet, dass der Schwerpunkt des Dreiecks in
+   der Mitte liegt. Keine zusaetzliche Verschiebung, sonst rutscht es nach rechts. */
+.videoknopf__kreis svg{display:block;width:28px;height:28px}
 .videoknopf:active .videoknopf__kreis{transform:scale(.94)}
 @media (hover:hover) and (pointer:fine){ .videoknopf:hover .videoknopf__kreis{transform:scale(1.05)} }
 .film.laeuft .videoknopf__kreis{opacity:0;transform:scale(.9)}
