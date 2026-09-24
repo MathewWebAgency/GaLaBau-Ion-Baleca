@@ -25,9 +25,17 @@ Alle diese Stellen sind auf der Seite **rot umrandet markiert** und lassen sich 
 | `datenschutz.html` | Hosting-Anbieter mit Anschrift und tatsächliche Speicherdauer der Logfiles |
 | `datenschutz.html` | Formspree-Hinweis, erledigt sich mit Abschnitt 2 |
 
-**Die Startseite ist vollständig**, dort steht seit dem 23.09.2026 kein
-Platzhalter mehr. Offen sind nur noch die sechs Stellen in Impressum und
-Datenschutz.
+**Stand 24.09.2026: auf keiner Seite steht mehr ein Platzhalter.** Auf Wunsch
+des Kunden sind die Hinweise vorerst entfernt. Eingetragen bzw. offen:
+
+| Stelle | Stand |
+|---|---|
+| Inhaberin | Maria Baleca, vom Kunden bestätigt |
+| Verantwortlich für den Inhalt | Maria Baleca |
+| Hosting-Anbieter | Hostinger International Ltd., Larnaca, Zypern |
+| Umsatzsteuer | Abschnitt entfernt. Hat der Betrieb eine USt-IdNr., **muss** sie ins Impressum |
+| Speicherdauer der Logfiles | nur allgemein "nach kurzer Zeit", keine Zahl erfunden |
+| Formspree | Abschnitt beschreibt das Formular im Betrieb. Den Vertrag nach Art. 28 DSGVO **vor** dem Eintragen der Formular-Kennung abschließen, sonst stimmt der Text nicht |
 
 Erfundene Zahlen kommen nicht auf die Seite. Lieber die Zeile streichen als raten.
 
