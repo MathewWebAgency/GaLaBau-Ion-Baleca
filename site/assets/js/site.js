@@ -66,7 +66,7 @@
      eingeschaltet hat, in einem langsamen Netz haengt oder wenig Bewegung
      moechte, bekommt das Standbild und sonst nichts. */
   (function heroFilm() {
-    var QUELLE = 'assets/video/garten-hero.mp4';
+    var QUELLE = 'assets/video/garten-hero.mp4?v=2';
     var video = document.getElementById('hero-video');
     var hero = document.getElementById('top');
     if (!video || !hero) return;

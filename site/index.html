@@ -27,10 +27,10 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="assets/fonts/sentient.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/supreme.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/garten-standbild.webp"
-      imagesrcset="assets/img/garten-standbild-480.webp 480w, assets/img/garten-standbild.webp 720w"
+<link rel="preload" as="image" href="assets/img/garten-standbild.webp?v=2"
+      imagesrcset="assets/img/garten-standbild-480.webp?v=2 480w, assets/img/garten-standbild.webp?v=2 720w"
       imagesizes="(min-width:861px) 58vh, 100vw" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/site.css?v=20260927">
+<link rel="stylesheet" href="assets/css/site.css?v=20260928">
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -73,8 +73,8 @@
     <img class="hero__wand" src="assets/img/garten-wand.webp" width="360" height="640"
          decoding="async" alt="">
     <div class="hero__buehne">
-      <img class="hero__still" src="assets/img/garten-standbild.webp"
-           srcset="assets/img/garten-standbild-480.webp 480w, assets/img/garten-standbild.webp 720w"
+      <img class="hero__still" src="assets/img/garten-standbild.webp?v=2"
+           srcset="assets/img/garten-standbild-480.webp?v=2 480w, assets/img/garten-standbild.webp?v=2 720w"
            sizes="(min-width:861px) 58vh, 100vw" width="720" height="1280"
            fetchpriority="high" decoding="async" alt="">
       <video class="hero__video" id="hero-video" muted playsinline loop preload="none"
@@ -82,7 +82,7 @@
       <script>/* Startet das Video, sobald der Browser hier ankommt, statt erst nach allen Bildern und Schriften. */
       (function(){var v=document.getElementById('hero-video'),n=navigator.connection;
       if(matchMedia('(prefers-reduced-motion: reduce)').matches||(n&&(n.saveData||/(^|-)2g$/.test(n.effectiveType||''))))return;
-      v.preload='auto';v.src=v.canPlayType('video/mp4; codecs="av01.0.08M.08"')==='probably'?'assets/video/garten-hero-av1.mp4':'assets/video/garten-hero.mp4';var p=v.play();if(p&&p.catch)p.catch(function(){});})();</script>
+      v.preload='auto';v.src=v.canPlayType('video/mp4; codecs="av01.0.08M.08"')==='probably'?'assets/video/garten-hero-av1.mp4?v=2':'assets/video/garten-hero.mp4?v=2';var p=v.play();if(p&&p.catch)p.catch(function(){});})();</script>
     </div>
   </div>
   <div class="hero__schleier" aria-hidden="true"></div>
@@ -505,7 +505,7 @@
   "alternateName":"Gartenpflege Maria MD",
   "description":"Gartenpflege, Heckenschnitt, Beetpflege, Hofreinigung und Grundstücksräumung im Raum Koblenz.",
   "url":"https://deeppink-sparrow-800217.hostingersite.com/",
-  "image":"https://deeppink-sparrow-800217.hostingersite.com/assets/img/garten-standbild.webp",
+  "image":"https://deeppink-sparrow-800217.hostingersite.com/assets/img/garten-standbild.webp?v=2",
   "telephone":"+4915750622718",
   "email":"info@gartenpflege-maria-md.de",
   "address":{"@type":"PostalAddress","streetAddress":"St.-Maternus-Straße 7","postalCode":"56070","addressLocality":"Koblenz","addressRegion":"Rheinland-Pfalz","addressCountry":"DE"},
@@ -612,6 +612,6 @@
 
 <script src="assets/js/gsap.min.js" defer></script>
 <script src="assets/js/ScrollTrigger.min.js" defer></script>
-<script src="assets/js/site.js?v=20260927" defer></script>
+<script src="assets/js/site.js?v=20260928" defer></script>
 </body>
 </html>
