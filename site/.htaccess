@@ -18,7 +18,7 @@ DirectoryIndex index.html
 
   # Alte Adressen mit /site/ auf die saubere Adresse ohne /site/.
   # Muss hier stehen: fuer Anfragen in diesen Ordner gilt nur diese Datei.
-  RewriteCond %{THE_REQUEST} \s/site/(\S*)\s [NC]
+  RewriteCond %{THE_REQUEST} \s/site/([^?\s]*) [NC]
   RewriteRule ^ /%1 [R=301,L]
 </IfModule>
 

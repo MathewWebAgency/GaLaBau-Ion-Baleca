@@ -17,7 +17,7 @@ ErrorDocument 404 /site/404.html
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
   # Wer /site/... direkt aufruft, landet auf der sauberen Adresse ohne /site/
-  RewriteCond %{THE_REQUEST} \s/site/(\S*)\s [NC]
+  RewriteCond %{THE_REQUEST} \s/site/([^?\s]*) [NC]
   RewriteRule ^ /%1 [R=301,L]
 
   # Zertifikatsprüfung von Hostinger nicht umleiten
