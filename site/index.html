@@ -30,7 +30,7 @@
 <link rel="preload" as="image" href="assets/img/garten-standbild.webp"
       imagesrcset="assets/img/garten-standbild-480.webp 480w, assets/img/garten-standbild.webp 720w"
       imagesizes="(min-width:861px) 58vh, 100vw" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/site.css?v=20260925">
+<link rel="stylesheet" href="assets/css/site.css?v=20260926">
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -82,7 +82,7 @@
       <script>/* Startet das Video, sobald der Browser hier ankommt, statt erst nach allen Bildern und Schriften. */
       (function(){var v=document.getElementById('hero-video'),n=navigator.connection;
       if(matchMedia('(prefers-reduced-motion: reduce)').matches||(n&&(n.saveData||/(^|-)2g$/.test(n.effectiveType||''))))return;
-      v.preload='auto';v.src='assets/video/garten-hero.mp4';var p=v.play();if(p&&p.catch)p.catch(function(){});})();</script>
+      v.preload='auto';v.src=v.canPlayType('video/mp4; codecs="av01.0.08M.08"')==='probably'?'assets/video/garten-hero-av1.mp4':'assets/video/garten-hero.mp4';var p=v.play();if(p&&p.catch)p.catch(function(){});})();</script>
     </div>
   </div>
   <div class="hero__schleier" aria-hidden="true"></div>
@@ -612,6 +612,6 @@
 
 <script src="assets/js/gsap.min.js" defer></script>
 <script src="assets/js/ScrollTrigger.min.js" defer></script>
-<script src="assets/js/site.js?v=20260925" defer></script>
+<script src="assets/js/site.js?v=20260926" defer></script>
 </body>
 </html>

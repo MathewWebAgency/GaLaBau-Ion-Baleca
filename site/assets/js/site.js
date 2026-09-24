@@ -104,7 +104,11 @@
       laeuft = true;
       // Meist hat das kleine Script direkt am Video die Quelle schon gesetzt
       // und das Laden laeuft. Dann nicht noch einmal von vorn anfangen.
-      if (!video.getAttribute('src')) { video.preload = 'auto'; video.src = QUELLE; }
+      if (!video.getAttribute('src')) {
+        video.preload = 'auto';
+        video.src = video.canPlayType('video/mp4; codecs="av01.0.08M.08"') === 'probably'
+          ? QUELLE.replace('.mp4', '-av1.mp4') : QUELLE;
+      }
       // Das Standbild bleibt darunter liegen, es kostet nichts mehr und
       // deckt den Moment ab, in dem die Schleife neu ansetzt.
       if (!video.paused && video.readyState >= 3) video.classList.add('laeuft');
@@ -457,6 +461,19 @@
         laden();
       }, { rootMargin: '100% 0px 100% 0px' });
       vorab.observe(figur);
+
+      // Steht der Hero-Film, laedt der Browser dieses Video gleich hinterher,
+      // statt zu warten, bis man in die Naehe scrollt. Nur wo es sichtbar ist,
+      // auf Desktop und Tablet ist der Abschnitt ausgeblendet.
+      window.addEventListener('load', function () {
+        window.setTimeout(function () {
+          var n = navigator.connection;
+          if (n && n.saveData) return;
+          if (figur.offsetParent === null) return;
+          vorab.disconnect();
+          laden();
+        }, 1200);
+      }, { once: true });
     });
   })();
 
