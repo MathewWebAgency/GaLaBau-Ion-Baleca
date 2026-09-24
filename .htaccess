@@ -7,6 +7,7 @@
 # ---------------------------------------------------------------
 
 Options -Indexes
+ErrorDocument 404 /site/404.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
