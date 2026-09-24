@@ -72,7 +72,25 @@ eingetragen. Wenn nicht, in diesen Dateien anpassen:
 - `robots.txt`: die Sitemap-Adresse
 - `sitemap.xml`: die `<loc>`-Adresse
 
-### Zwei Wege nach oben
+### So kommt die Seite online: git push
+
+Hostinger ist per Git-Deployment mit `MathewWebAgency/GaLaBau-Ion-Baleca`
+verbunden. **Jeder Push auf `main` ist der Upload**, nach etwa 10 bis 30
+Sekunden ist er live. Hostinger spielt dabei das ganze Repository nach
+`public_html`. Die `.htaccess` an der Wurzel des Repositorys macht `site/` zur
+Wurzel der Domain, leitet `/site/...` per 301 um, liefert die eigene 404 aus
+und sperrt alles ausserhalb von `site/` (Konzept, Übergabe, Skripte).
+**Diese Datei nie löschen**, ohne sie gibt die Startseite 403. Genau das ist
+bis 24.09.2026 mehrfach passiert, bevor die Ursache klar war.
+
+Nach jedem Push prüfen:
+`~/.claude/skills/hostinger-upload/scripts/pruefe_live.sh https://deeppink-sparrow-800217.hostingersite.com /impressum.html /datenschutz.html`
+
+Nichts mehr von Hand im Dateimanager hochladen, der nächste Push überschreibt
+es. Die Wege A und B unten sind nur noch Rückfall, falls das Git-Deployment
+einmal abgeschaltet wird.
+
+### Frühere Wege (nur Rückfall)
 
 **A. Von Hand, einmalig.** Das fertige Paket liegt unter
 `_upload/gartenprofi-baleca-website.zip` (82 Dateien, 13 MB, `index.html` an der
