@@ -306,46 +306,114 @@
   })();
 
   /* ===================== Vorher / Nachher Regler ======================== */
+  /* Gezogen wird ueber Pointer Events auf dem ganzen Bild, nicht ueber den
+     nativen Regler: der reagierte auf dem Handy nur, wenn man genau seinen
+     unsichtbaren Knopf traf, und hakte. Der Regler bleibt unsichtbar fuer
+     Tastatur und Screenreader und wird mitgefuehrt.
+     Auf dem Handy springt die Kante nicht schon beim Aufsetzen, sonst
+     verschiebt sie jeder, der nur vorbeiscrollt. Sie folgt, sobald der Finger
+     eindeutig waagerecht zieht, oder beim kurzen Antippen. Weitere Finger
+     werden ignoriert. Bewegt wird nur per transform, hoechstens einmal pro
+     Frame, gemessen wird einmal pro Zug. */
   (function vergleiche() {
     var karten = document.querySelectorAll('[data-ba]');
     karten.forEach(function (figur, index) {
       var buehne = figur.querySelector('.ba__buehne');
       var regler = figur.querySelector('.ba__regler');
-      if (!buehne || !regler) return;
+      var rahmen = figur.querySelector('.ba__vorher');
+      var bild = rahmen && rahmen.querySelector('img');
+      var kante = figur.querySelector('.ba__kante');
+      var griff = figur.querySelector('.ba__griff');
+      if (!buehne || !regler || !rahmen || !bild || !kante || !griff) return;
+
+      var breite = 0, hoehe = 0, neigung = 0, p = parseFloat(regler.value) || 50;
+      var messen = function () {
+        var r = buehne.getBoundingClientRect();
+        breite = r.width; hoehe = r.height;
+        // Die Kante wandert ueber die Hoehe um 6,4 % der Breite
+        neigung = hoehe ? Math.atan(0.064 * breite / hoehe) * 180 / Math.PI : 0;
+        return r;
+      };
+      var zeichnen = function () {
+        if (!breite) messen();
+        var x = p / 100 * breite;
+        var tx = x - breite;
+        var n = neigung.toFixed(3);
+        rahmen.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,0,0) skewX(-' + n + 'deg)';
+        bild.style.transform = 'skewX(' + n + 'deg) translate3d(' + (-tx).toFixed(2) + 'px,0,0)';
+        kante.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0) skewX(-' + n + 'deg)';
+        griff.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
+      };
+      var setzen = function (wert) {
+        p = Math.min(100, Math.max(0, wert));
+        regler.value = p.toFixed(1);
+        zeichnen();
+      };
+      setzen(p);
+      window.addEventListener('resize', function () { breite = 0; zeichnen(); }, { passive: true });
 
       var beruehrt = false;
-      var setzen = function (p) { buehne.style.setProperty('--p', p); };
-      setzen(regler.value);
+      regler.addEventListener('input', function () { beruehrt = true; setzen(parseFloat(regler.value)); });
 
-      // Zeigerbewegung folgt 1:1, ohne Easing. Direkte Bedienung darf nicht nachlaufen.
-      regler.addEventListener('input', function () {
-        beruehrt = true;
-        setzen(regler.value);
+      var aktiv = null, folgt = false, startX = 0, startY = 0, rect = null, letzteX = 0, anfrage = 0;
+      var ausFinger = function () {
+        anfrage = 0;
+        if (rect && rect.width) setzen((letzteX - rect.left) / rect.width * 100);
+      };
+      var vormerken = function (x) {
+        letzteX = x;
+        if (!anfrage) anfrage = requestAnimationFrame(ausFinger);
+      };
+
+      buehne.addEventListener('pointerdown', function (e) {
+        if (aktiv !== null) return;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        aktiv = e.pointerId; beruehrt = true;
+        startX = e.clientX; startY = e.clientY;
+        rect = messen();
+        folgt = e.pointerType === 'mouse';
+        try { buehne.setPointerCapture(e.pointerId); } catch (err) { /* synthetisch */ }
+        buehne.classList.add('zieht');
+        if (folgt) { e.preventDefault(); vormerken(e.clientX); }
       });
-      regler.addEventListener('pointerdown', function () { beruehrt = true; buehne.classList.add('zieht'); });
-      ['pointerup','pointercancel','blur'].forEach(function (ev) {
-        regler.addEventListener(ev, function () { buehne.classList.remove('zieht'); });
+      buehne.addEventListener('pointermove', function (e) {
+        if (e.pointerId !== aktiv) return;
+        if (!folgt) {
+          var dx = Math.abs(e.clientX - startX), dy = Math.abs(e.clientY - startY);
+          if (dx < 6 || dx < dy) return;
+          folgt = true;
+        }
+        vormerken(e.clientX);
       });
+      var ende = function (e) {
+        if (e.pointerId !== aktiv) return;
+        var tipp = e.type === 'pointerup' && !folgt &&
+          Math.abs(e.clientX - startX) < 8 && Math.abs(e.clientY - startY) < 8;
+        if (tipp || (e.type === 'pointerup' && folgt)) vormerken(e.clientX);
+        aktiv = null; folgt = false;
+        buehne.classList.remove('zieht');
+      };
+      buehne.addEventListener('pointerup', ende);
+      buehne.addEventListener('pointercancel', ende);
+      buehne.addEventListener('dragstart', function (e) { e.preventDefault(); });
 
       if (istRuhig() || index !== 0) return;
 
       // Nur die erste Karte zeigt einmal, dass man ziehen kann.
-      // Sechs Karten, die gleichzeitig wackeln, wären Effekt statt Hinweis.
+      // Vier Karten, die gleichzeitig wackeln, waeren Effekt statt Hinweis.
       var io = new IntersectionObserver(function (eintraege) {
         if (!eintraege[0].isIntersecting || beruehrt) return;
         io.disconnect();
         var start = performance.now(), dauer = 900;
         (function schritt(jetzt) {
-          if (beruehrt) { setzen(regler.value); return; }
+          if (beruehrt) return;
           var t = Math.min((jetzt - start) / dauer, 1);
           // hin und zurueck, weich
           var welle = Math.sin(t * Math.PI);
           var eased = 1 - Math.pow(1 - welle, 2);
-          var p = 50 + eased * 13;
-          setzen(p);
-          regler.value = p;
+          setzen(50 + eased * 13);
           if (t < 1) requestAnimationFrame(schritt);
-          else { regler.value = 50; setzen(50); }
+          else setzen(50);
         })(start);
       }, { threshold: 0.55 });
       io.observe(figur);
