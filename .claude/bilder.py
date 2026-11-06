@@ -130,8 +130,11 @@ AUFTRAEGE = [
     # Diese sechs kamen als Kacheln aus Bildschirmfotos von Collagen, je rund 450
     # Bildpunkte breit. Sie sind mit Topaz vervierfacht (siehe UEBERGABE, "Bilder
     # und Marke"). Die Originale aus Ions Telefon waeren immer noch besser.
-    dict(quelle="_work/up/up-ba-garage-vorher.png", name="ba-garage-vorher", ver=4 / 5, fokus=(0.5, 0.5), deckel=1000),
-    dict(quelle="_work/up/up-ba-garage-nachher.png", name="ba-garage-nachher", ver=4 / 5, fokus=(0.5, 0.5), deckel=1000),
+    # Das Steinbeet ersetzt die Garage: echte Telefonbilder, nichts hochgerechnet.
+    # Die beiden Aufnahmen stehen rund 105 und 100 Bildpunkte versetzt. Die
+    # Ausschnitte gleichen das aus, damit die drei Stelen beim Ziehen stehen bleiben.
+    dict(quelle="_raw/neu7/n7-02.jpg", name="ba-steinbeet-vorher", box=(445 / 1500, 100 / 1125, 1265 / 1500, 1.0), ver=4 / 5, q=72),
+    dict(quelle="_raw/neu7/n7-01.jpg", name="ba-steinbeet-nachher", box=(340 / 1500, 0.0, 1160 / 1500, 1025 / 1125), ver=4 / 5, q=72),
     # Die Hausecke ist raus. An ihrer Stelle steht das Heckenpaar, echt und
     # unbearbeitet, dieselbe Hecke wie im Hero.
     dict(quelle="_raw/neu3/n3-10.jpg", name="ba-hecke-vorher", ver=4 / 5, fokus=(0.5, 0.62)),
@@ -151,10 +154,13 @@ AUFTRAEGE = [
     # damit die Flaeche nicht nur nacktes Gras ist.
     dict(quelle="_raw/neu6/n6-01.webp", name="rasen-kante", box=(0.0, 0.26, 0.70, 1.0),
          ver=5 / 4, fokus=(0.5, 0.40)),
-    dict(quelle="_raw/neu2/n2-13.jpg", name="hecke-strassenrand", ver=5 / 4, fokus=(0.5, 0.58)),
+    # Geschnittene Hecke im Herbst. Loest die Strassenhecke ab, die schon im
+    # Vergleich darueber steht.
+    dict(quelle="_raw/neu7/n7-05.jpg", name="hecke-geschnitten", ver=5 / 4, fokus=(0.5, 0.56)),
     dict(quelle="_raw/neu2/n2-05.jpg", name="beet-mauer", ver=5 / 4, fokus=(0.5, 0.58)),
     dict(quelle="_work/named/grundstueck-arbeit.jpg", name="grundstueck-arbeit", ver=5 / 4, fokus=(0.5, 0.5)),
-    dict(quelle="_work/named/streifen-fertig.jpg", name="streifen-fertig", ver=5 / 4, fokus=(0.5, 0.45)),
+    # Ganzes Grundstueck im Herbst: Rasen, Hecke, Straeucher zurueckgenommen.
+    dict(quelle="_raw/neu7/n7-03.jpg", name="garten-herbst", ver=5 / 4, fokus=(0.5, 0.6)),
 
     # --- Ablauf: drei Schritte (4:3 quer) ---
     dict(quelle="_work/named/beet-01-roh.jpg", name="beet-01-roh", ver=4 / 3, fokus=(0.5, 0.5)),
@@ -170,6 +176,10 @@ AUFTRAEGE = [
     #     Beschnitten wird jetzt oben und unten statt seitlich, deshalb
     #     Fokus 0,62: sonst bleibt zu viel Himmel und die Stufen fallen raus. ---
     dict(quelle="_raw/neu6/n6-02.webp", name="ion-beet", ver=4 / 5, fokus=(0.5, 0.62)),
+
+    # --- Zaehler: Ion am Firmenwagen. Der Himmel faellt weg, das Gelb des Wagens
+    #     stoesst links an die gelbe Flaeche der Sektion. ---
+    dict(quelle="_raw/neu7/n7-06.jpg", name="ion-firmenwagen", box=(0.0, 0.26, 1.0, 1.0), breiten=(480, 800)),
 
     # --- Im Einsatz: Standbild ist das erste Videobild, damit beim Start
     #     nichts springt. Der Rahmen ist 9:16, die Datei auch. ---

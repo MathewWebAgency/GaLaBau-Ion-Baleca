@@ -19,8 +19,6 @@
     if (!reduce.matches) return;
     document.querySelectorAll('.auf').forEach(function (el) { el.classList.add('ist-da'); });
   });
-  var hatGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
-  if (hatGsap) gsap.registerPlugin(ScrollTrigger);
 
   /* ================= Kopfleiste erscheint nach dem Hero ================= */
   (function kopfleiste() {
@@ -426,13 +424,85 @@
     if (!svg) return;
     var pfad = svg.querySelector('path');
     if (!pfad) return;
-    if (istRuhig() || !hatGsap) { pfad.style.strokeDasharray = 'none'; return; }
+    if (istRuhig()) { pfad.style.strokeDasharray = 'none'; return; }
     pfad.style.strokeDasharray = '1';
     pfad.style.strokeDashoffset = '1';
-    ScrollTrigger.create({
-      trigger: svg, start: 'top 92%', end: 'top 46%', scrub: 0.5,
-      onUpdate: function (s) { pfad.style.strokeDashoffset = String(1 - s.progress); }
+    // Die Linie laeuft mit, solange ihr oberer Rand zwischen 92 und 46 Prozent
+    // der Fensterhoehe liegt. Dafuer lohnt keine Bibliothek.
+    var wartet = false;
+    var zeichnen = function () {
+      wartet = false;
+      var hoehe = window.innerHeight;
+      var anteil = (hoehe * 0.92 - svg.getBoundingClientRect().top) / (hoehe * 0.46);
+      pfad.style.strokeDashoffset = String(1 - Math.min(1, Math.max(0, anteil)));
+    };
+    var vormerken = function () {
+      if (wartet) return;
+      wartet = true;
+      requestAnimationFrame(zeichnen);
+    };
+    new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { window.addEventListener('scroll', vormerken, { passive: true }); vormerken(); }
+      else { window.removeEventListener('scroll', vormerken); vormerken(); }
+    }, { rootMargin: '10% 0px' }).observe(svg);
+  })();
+
+  /* ============================== Zaehlwerk =============================
+     Aus der Zahl im Text wird eine Reihe Rollen. Sie laufen einmal an, wenn
+     sie ins Bild kommen, die hinteren Stellen drehen eine Runde mehr. Die
+     Zahl selbst bleibt fuer Vorleseprogramme und Suchmaschinen als Text
+     stehen, und nichts zaehlt von allein weiter: es wird nur gezeigt, was im
+     HTML steht. */
+  (function zaehlwerk() {
+    var felder = document.querySelectorAll('[data-zaehler]');
+    if (!felder.length) return;
+    var STELLEN = 4;
+    var ZIFFERN = 20; // zweimal 0 bis 9, die hinteren Stellen drehen eine Runde mehr
+    var ruhig = istRuhig();
+
+    var ziel = function (position) { return 'translate3d(0,' + (-position * 100 / ZIFFERN) + '%,0)'; };
+
+    felder.forEach(function (feld) {
+      var wert = feld.textContent.trim();
+      var text = (new Array(STELLEN + 1).join('0') + wert).slice(-Math.max(STELLEN, wert.length));
+      var fuehrend = text.length - wert.length;
+      var leser = document.createElement('span');
+      leser.className = 'nurleser';
+      leser.textContent = wert;
+      feld.textContent = '';
+      feld.appendChild(leser);
+
+      text.split('').forEach(function (ziffer, i) {
+        var rolle = document.createElement('span');
+        rolle.className = 'rolle' + (i < fuehrend ? ' rolle--null' : '') + (i === text.length - 1 ? ' rolle--einer' : '');
+        rolle.setAttribute('aria-hidden', 'true');
+        var band = document.createElement('span');
+        band.className = 'rolle__band';
+        for (var n = 0; n < ZIFFERN; n++) {
+          var z = document.createElement('span');
+          z.textContent = String(n % 10);
+          band.appendChild(z);
+        }
+        var position = (i < fuehrend ? 0 : 10) + parseInt(ziffer, 10);
+        band.dataset.ziel = String(position);
+        band.style.transitionDelay = (i * 90) + 'ms';
+        if (ruhig) band.style.transform = ziel(position);
+        rolle.appendChild(band);
+        feld.appendChild(rolle);
+      });
     });
+    if (ruhig) return;
+
+    var io = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll('.rolle__band').forEach(function (band) {
+          band.style.transform = ziel(parseFloat(band.dataset.ziel));
+        });
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.6 });
+    felder.forEach(function (feld) { io.observe(feld); });
   })();
 
   /* ============================= Einwände =============================== */
@@ -587,7 +657,7 @@
       }
 
       if (!FORMSPREE_ID) {
-        zeige('Das Formular ist noch nicht scharfgeschaltet. Rufen Sie bitte unter 0157 506 227 18 an oder schreiben Sie an info@gartenpflege-maria-md.de.', true);
+        zeige('Das Formular ist noch nicht verbunden. Ruf bitte unter 0157 506 227 18 an oder schreib an info@gartenpflege-maria-md.de.', true);
         return;
       }
 
@@ -604,9 +674,9 @@
         form.reset();
         form.querySelectorAll('[aria-invalid]').forEach(function (f) { f.removeAttribute('aria-invalid'); });
         form.querySelectorAll('.feld__fehler').forEach(function (p) { p.hidden = true; });
-        zeige('Angekommen. Sie hören von Ion, meist noch am selben Tag.', false);
+        zeige('Angekommen. Du hörst von Ion, meist noch am selben Tag.', false);
       }).catch(function () {
-        zeige('Das hat gerade nicht geklappt. Rufen Sie bitte unter 0157 506 227 18 an, dann geht es sofort.', true);
+        zeige('Das hat gerade nicht geklappt. Ruf bitte unter 0157 506 227 18 an, dann geht es sofort.', true);
       }).then(function () {
         knopf.disabled = false;
         knopf.textContent = vorher;

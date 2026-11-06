@@ -1,5 +1,15 @@
 User-agent: *
 Allow: /
 
+# Such- und KI-Crawler ausdruecklich erlaubt
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: PerplexityBot
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: https://deeppink-sparrow-800217.hostingersite.com/sitemap.xml

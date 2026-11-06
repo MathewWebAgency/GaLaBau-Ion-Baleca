@@ -642,12 +642,6 @@ a{color:inherit}
 @media (hover:hover) and (pointer:fine){
   .leistung:hover .leistung__bild img{transform:scale(1.035)}
 }
-.leistung__nr{
-  position:absolute;left:0;bottom:0;padding:.5rem .8rem;
-  background:var(--kies);color:var(--tinte);
-  font-family:var(--auszeichnung);font-size:.82rem;font-weight:600;
-  font-variant-numeric:tabular-nums;letter-spacing:.04em;
-}
 .leistung h3{margin:1.05rem 0 .5rem}
 .leistung ul{margin:.7rem 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:.35rem}
 .leistung li{
@@ -677,7 +671,6 @@ a{color:inherit}
     border-bottom:1px solid rgba(244,246,241,.16);
   }
   .leistung__bild{grid-column:1;grid-row:1 / 5;aspect-ratio:1/1}
-  .leistung__nr{padding:.26rem .45rem;font-size:.7rem}
   .leistung h3{grid-column:2;grid-row:2;margin:0 0 .45rem;font-size:1.16rem;line-height:1.22}
   /* Flex statt inline: im Markup steht zwischen den Listenpunkten kein
      Leerraum, als Inline-Elemente gaebe es also keine einzige Stelle, an der
@@ -706,7 +699,7 @@ a{color:inherit}
   font-variant-numeric:tabular-nums;letter-spacing:.04em}
 .schritt p{font-size:1rem;line-height:1.55;margin:0;max-width:38ch}
 .linie-svg{width:100%;height:26px;margin-bottom:1.4rem;overflow:visible}
-.linie-svg path{fill:none;stroke:var(--mulch);stroke-width:2}
+.linie-svg path{fill:none;stroke:var(--mulch);stroke-width:2;transition:stroke-dashoffset 260ms var(--ease-out)}
 .band--dunkel .schritt__nr{color:var(--gelb)}
 .band--dunkel .linie-svg path{stroke:var(--gelb)}
 
@@ -735,17 +728,131 @@ a{color:inherit}
    Bild lief dadurch ueber seine ganze natuerliche Hoehe und wurde
    stattdessen seitlich beschnitten. */
 .person__bild img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 50%}
+/* ---------- Zaehler ----------
+   Die einzige gelbe Flaeche der Seite, und sie kommt nicht aus dem Nichts:
+   #F2B623 ist am Firmenwagen gemessen, und genau der Wagen stoesst im Foto an
+   die Flaeche an. Am Rechner links davon, am Telefon direkt darueber. */
+.zaehlband{
+  display:grid;background:var(--gelb);color:var(--mulch);
+}
+.zaehlband__inhalt{
+  padding:clamp(2.6rem,8vw,4rem) var(--gutter) clamp(3rem,9vw,4.4rem);
+  align-self:center;min-width:0;
+}
+.zaehlband .sektion-kopf{margin-bottom:clamp(1.8rem,3.4vw,2.8rem)}
+.zaehlband .sektion-kopf h2{max-width:none}
+.zaehlband .gross{max-width:46ch;color:var(--mulch)}
+.zaehlband__bild{position:relative;margin:0;order:-1;overflow:hidden;background:var(--mulch)}
+.zaehlband__bild img{
+  display:block;width:100%;height:100%;aspect-ratio:1/1;
+  object-fit:cover;object-position:0 100%;
+}
+.zaehlband__bild figcaption{
+  position:absolute;right:var(--gutter);bottom:clamp(.9rem,2vw,1.4rem);
+  font-family:var(--display);font-weight:600;line-height:1.2;
+  font-size:clamp(1.02rem,1.5vw,1.25rem);color:var(--kalk);
+  max-width:7.5em;text-align:right;
+}
+@media (min-width:900px){
+  .zaehlband{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .zaehlband__bild{order:0}
+  .zaehlband__bild img{position:absolute;inset:0;aspect-ratio:auto;object-position:52% 78%}
+  /* Linke Kante der Spalte auf derselben Linie wie alle anderen Sektionen. */
+  .zaehlband__inhalt{
+    padding-block:clamp(4.5rem,8vw,7.5rem);
+    padding-left:max(var(--gutter),calc((100vw - var(--breite))/2 + var(--gutter)));
+    padding-right:clamp(2rem,4vw,4rem);
+  }
+}
+
+/* Das Zaehlwerk. Ohne Script steht die Zahl einfach gross im Text. Das Script
+   legt pro Stelle eine Rolle an. Die letzte Stelle ist hell abgesetzt, wie die
+   Einerrolle an einem Betriebsstundenzaehler. */
+.zaehler{
+  --zh:clamp(4.6rem,7.2vw,6.4rem);--zw:calc(var(--zh)*.68);
+  display:grid;gap:clamp(1.3rem,2.4vw,1.8rem) clamp(1.6rem,3vw,2.6rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,calc(var(--zw)*4 + 12px)),max-content));
+  margin:0 0 clamp(1.5rem,3vw,2.2rem);
+}
+.zaehler__posten{display:flex;flex-direction:column-reverse;gap:.6rem}
+.zaehler dt{font-weight:600;font-size:1.02rem;line-height:1.3}
+.zaehler dd{
+  margin:0;display:flex;gap:3px;
+  font-family:var(--body);font-weight:700;font-size:calc(var(--zh)*.66);line-height:var(--zh);
+  font-variant-numeric:tabular-nums;letter-spacing:0;
+}
+.rolle{
+  position:relative;display:block;flex:none;width:var(--zw);height:var(--zh);overflow:hidden;
+  background:var(--mulch);color:var(--kalk);border-radius:5px;
+}
+.rolle--null{color:rgba(244,246,241,.42)}
+.rolle--einer{background:var(--kalk);color:var(--mulch)}
+.rolle__band{display:block;transition:transform 1500ms cubic-bezier(.16,1,.3,1)}
+.rolle__band span{display:block;height:var(--zh);text-align:center}
+.nurleser{
+  position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap;
+}
+.zaehlband__stand{font-size:1rem;line-height:1.5;margin:0;max-width:none;font-weight:500}
+.zaehlband__stand a{font-weight:600;text-underline-offset:.18em}
+@media (max-width:599px){
+  .zaehlband__stand span{display:none}
+  .zaehlband__stand a{display:block;margin-top:.2rem}
+}
+.zaehlband :focus-visible{outline-color:var(--mulch)}
+@media (prefers-reduced-motion:reduce){ .rolle__band{transition:none} }
+
+/* ---------- Bewertungen ----------
+   Kein Kartenraster: drei Zitate ohne Rahmen, am Rechner treppenfoermig
+   versetzt. Der Schnitt steht rechts, damit die Kopfzeile die Breite traegt. */
+.stimmen__kopf{display:grid;gap:clamp(1.4rem,3vw,2rem);margin-bottom:clamp(2.6rem,5vw,4.4rem)}
+.stimmen__kopf .kopfzeile-sektion{margin-bottom:0}
+.stimmen__kopf .kopfzeile-sektion h2{max-width:18ch}
+.stimmen__schnitt{
+  display:flex;align-items:center;gap:.9rem;margin:0;max-width:none;
+}
+.stimmen__schnitt b{
+  font-family:var(--display);font-weight:600;line-height:1;color:var(--gelb);
+  font-size:clamp(3rem,5.2vw,4.4rem);letter-spacing:-.02em;
+}
+.stimmen__schnitt span{font-size:1rem;line-height:1.35;max-width:16ch;color:var(--kalk)}
+@media (min-width:900px){
+  .stimmen__kopf{grid-template-columns:minmax(0,1fr) auto;align-items:end}
+}
+.stimmen{display:grid;gap:clamp(2.4rem,6vw,3rem)}
+.stimme{margin:0}
+.sterne{display:flex;gap:2px;color:var(--gelb);margin-bottom:.9rem}
+.sterne svg{width:20px;height:20px;fill:currentColor}
+.stimme blockquote{margin:0}
+.stimme blockquote p{
+  font-family:var(--display);font-weight:500;margin:0;max-width:24ch;
+  hyphens:manual;
+  font-size:clamp(1.42rem,2.2vw,1.9rem);line-height:1.24;letter-spacing:-.008em;
+}
+.stimme figcaption{margin-top:1rem;font-size:1rem;line-height:1.45;color:var(--kalk-leise)}
+.stimme figcaption b{display:block;font-weight:600;color:var(--kalk)}
+.stimme figcaption span{display:block}
+@media (min-width:900px){
+  .stimmen{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(2rem,4vw,3.6rem)}
+  .stimme:nth-child(2){margin-top:clamp(2rem,3.4vw,3.2rem)}
+  .stimme:nth-child(3){margin-top:clamp(4rem,6.8vw,6.4rem)}
+}
+.stimmen__quelle{
+  margin:clamp(2.6rem,5vw,4rem) 0 0;max-width:72ch;
+  font-size:1rem;line-height:1.55;color:var(--kalk-leise);
+}
+.stimmen__quelle a{color:var(--kalk);font-weight:600;text-underline-offset:.18em;white-space:nowrap}
+
 /* ---------- Filme ---------- */
 /* Das Saegevideo nur am Telefon. Am Schirm und am Tablet laeuft oben schon
    ein Film, ein zweiter weiter unten war dort zu viel. display:none sorgt
    auch dafuer, dass Standbild und Video gar nicht erst geladen werden. */
 @media (min-width:768px){
   #rundgang{display:none}
-  /* Die Fragen folgen dann direkt auf den dunklen Abschnitt ueber Ion.
-     band--knapp war fuer hell auf hell gedacht, also fuer den Anschluss an
-     das Video. Ohne Video braucht der Farbwechsel den vollen Abstand. */
-  #rundgang + .band--knapp{padding-top:var(--band)}
 }
+/* Vor den Fragen steht der dunkle Abschnitt mit den Bewertungen. band--knapp
+   war fuer hell auf hell gedacht, der Farbwechsel braucht den vollen Abstand. */
+#bewertungen + .band--knapp{padding-top:var(--band)}
 
 /* Ohne das stiess das Video direkt an die Ueberschrift, und die Unterlaenge
    vom g in "Arbeitstag" verschwand dahinter. .sektion-kopf setzt
@@ -1093,11 +1200,14 @@ mark.platzhalter{
 
 .kopf__nav{display:none;gap:.25rem;margin-right:auto}
 .kopf__nav a{font-family:var(--auszeichnung);font-size:.8rem;font-weight:600;letter-spacing:.05em;
+  white-space:nowrap;hyphens:none;-webkit-hyphens:none;
   text-decoration:none;color:var(--kalk-leise);padding:.8rem .7rem;
   display:inline-flex;align-items:center;min-height:46px;
   transition:color 160ms var(--ease-out)}
 @media (hover:hover) and (pointer:fine){ .kopf__nav a:hover{color:var(--kalk)} }
-@media (min-width:1080px){
+/* Mit fuenf Punkten reicht die Breite erst ab hier, darunter brach die Leiste
+   zweizeilig um. */
+@media (min-width:1180px){
   .kopf__nav{display:flex}
   .kopf__marke{margin-right:1.6rem}
 }

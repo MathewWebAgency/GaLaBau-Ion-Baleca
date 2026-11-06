@@ -11,6 +11,36 @@ dem Livegang passieren.
 
 ---
 
+## 0. Stand 06.11.2026: was vor dem Livegang noch offen ist
+
+| Punkt | Wer | Warum |
+|---|---|---|
+| Echte Zählerstände von Ion | Ion | 517 Hecken und 153 Gärten sind krumme Platzhalter für "über 500" und "über 150". Auf der Seite dürfen nur belegbare Stände stehen (§ 5 UWG) |
+| Formular anschließen | Entscheidung offen | Siehe Abschnitt 2. Es verschickt noch nichts |
+| USt-IdNr. | Maria Baleca | Falls vorhanden, muss sie ins Impressum |
+| Rechtstexte gegenlesen lassen | Anwalt oder Generator mit Haftung | Die Texte sind geprüft, aber keine Rechtsberatung |
+| Echte Domain | Aaron | Siehe Abschnitt 3 |
+
+### Zähler nachtragen
+
+In `site/index.html` im Abschnitt `5b · Zähler` nur drei Dinge ändern: die beiden
+Zahlen in `data-zaehler` und das Datum in `<time>` (Attribut und Text). Das Zählwerk
+baut sich daraus selbst. Es zählt bewusst nicht von allein hoch: ein Zähler, der ohne
+echte Aufträge läuft, wäre irreführende Werbung. Danach `git push`.
+
+### Bewertungen nachtragen
+
+Quelle ist das Profil `my-hammer.de/auftragnehmer/hausmeisterdienste-maria-md`. Kommt
+eine Bewertung dazu: Text wörtlich übernehmen, Schnitt und Anzahl (`stimmen__schnitt`,
+`zaehlband__stand`) und das Datum in `stimmen__quelle` anpassen. Der Satz "Das sind alle
+Bewertungen" stimmt nur, solange wirklich alle dort stehen. Der Absatz selbst ist Pflicht
+nach § 5b Abs. 3 UWG und bleibt stehen. Kundennamen kommen nicht auf die Seite, auch
+wenn sie bei MyHammer sichtbar sind, dafür bräuchte es die Einwilligung der Person.
+Kein `AggregateRating` ins JSON-LD: Google lässt selbst eingebundene Bewertungen für das
+eigene Unternehmen nicht zu.
+
+---
+
 ## 1. Was du noch brauchst
 
 Alle diese Stellen sind auf der Seite **rot umrandet markiert** und lassen sich nicht
@@ -40,6 +70,15 @@ des Kunden sind die Hinweise vorerst entfernt. Eingetragen bzw. offen:
 Erfundene Zahlen kommen nicht auf die Seite. Lieber die Zeile streichen als raten.
 
 ## 2. Formular scharfschalten
+
+> **Stand 06.11.2026, gegen die Anbieterseiten geprüft:** Der kostenlose
+> Formspree-Tarif erlaubt keine Datei-Uploads und nur 50 Anfragen im Monat, das
+> Foto ist aber der Kern des Formulars. Formspree steht außerdem nicht in der Liste
+> des EU-US Data Privacy Framework (dataprivacyframework.gov), die frühere Aussage
+> dazu ist aus der Datenschutzerklärung entfernt, genauso der ganze Formspree-Absatz.
+> **Wird das Formular angeschlossen, muss der Empfänger wieder in Abschnitt 3 der
+> Datenschutzerklärung stehen.** Empfehlung: eigenes kleines PHP-Skript bei Hostinger
+> statt Formspree. Keine Übermittlung in die USA, keine Kosten, Fotos gehen.
 
 Das Formular ist fertig gebaut, aber noch nicht verbunden. Solange die Kennung fehlt,
 verschickt es nichts und weist die Besucher ehrlich auf Telefon und E-Mail hin.
