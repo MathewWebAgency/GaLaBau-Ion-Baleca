@@ -16,8 +16,8 @@ dem Livegang passieren.
 | Punkt | Wer | Warum |
 |---|---|---|
 | Echte Zählerstände von Ion | Ion | 517 Hecken und 153 Gärten sind krumme Platzhalter für "über 500" und "über 150". Auf der Seite dürfen nur belegbare Stände stehen (§ 5 UWG) |
-| Formular anschließen | Aaron | Siehe Abschnitt 2. Es verschickt noch nichts, und die Grundlage der USA-Übermittlung fehlt noch |
-| WhatsApp prüfen | Ion | Die Nummer 0157 506 227 18 muss WhatsApp haben. Empfohlen: WhatsApp Business statt der privaten App, weil die private App das Adressbuch an WhatsApp überträgt |
+| Formular anschließen | Aaron | Siehe Abschnitt 2. Der AV-Vertrag steht (Aaron, 06.11.2026). Es fehlen die Formular-Kennung und die Angabe zur Grundlage der USA-Übermittlung |
+| WhatsApp | erledigt | Die Nummer 0157 506 227 18 ist laut Kunde aktiv. Empfohlen bleibt WhatsApp Business statt der privaten App, weil die private App das Adressbuch an WhatsApp überträgt |
 | USt-IdNr. | Maria Baleca | Falls vorhanden, muss sie ins Impressum |
 | Rechtstexte gegenlesen lassen | Anwalt oder Generator mit Haftung | Die Texte sind geprüft, aber keine Rechtsberatung |
 | Echte Domain | Aaron | Siehe Abschnitt 3 |
