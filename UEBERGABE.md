@@ -16,23 +16,23 @@ dem Livegang passieren.
 | Punkt | Wer | Warum |
 |---|---|---|
 | Echte Zählerstände von Ion | Ion | 517 Hecken und 153 Gärten sind krumme Platzhalter für "über 500" und "über 150". Auf der Seite dürfen nur belegbare Stände stehen (§ 5 UWG) |
-| Formular anschließen | Entscheidung offen | Siehe Abschnitt 2. Es verschickt noch nichts |
+| Formular anschließen | Aaron | Siehe Abschnitt 2. Es verschickt noch nichts, und die Grundlage der USA-Übermittlung fehlt noch |
+| WhatsApp prüfen | Ion | Die Nummer 0157 506 227 18 muss WhatsApp haben. Empfohlen: WhatsApp Business statt der privaten App, weil die private App das Adressbuch an WhatsApp überträgt |
 | USt-IdNr. | Maria Baleca | Falls vorhanden, muss sie ins Impressum |
 | Rechtstexte gegenlesen lassen | Anwalt oder Generator mit Haftung | Die Texte sind geprüft, aber keine Rechtsberatung |
 | Echte Domain | Aaron | Siehe Abschnitt 3 |
 
 ### Zähler nachtragen
 
-In `site/index.html` im Abschnitt `5b · Zähler` nur drei Dinge ändern: die beiden
-Zahlen in `data-zaehler` und das Datum in `<time>` (Attribut und Text). Das Zählwerk
-baut sich daraus selbst. Es zählt bewusst nicht von allein hoch: ein Zähler, der ohne
+In `site/index.html` im Abschnitt `2b · Zähler` nur die beiden Zahlen in
+`data-zaehler` ändern. Das Zählwerk baut sich daraus selbst. Es zählt bewusst nicht von allein hoch: ein Zähler, der ohne
 echte Aufträge läuft, wäre irreführende Werbung. Danach `git push`.
 
 ### Bewertungen nachtragen
 
 Quelle ist das Profil `my-hammer.de/auftragnehmer/hausmeisterdienste-maria-md`. Kommt
-eine Bewertung dazu: Text wörtlich übernehmen, Schnitt und Anzahl (`stimmen__schnitt`,
-`zaehlband__stand`) und das Datum in `stimmen__quelle` anpassen. Der Satz "Das sind alle
+eine Bewertung dazu: Text wörtlich übernehmen, den Schnitt in `zaehlband__stand` und das
+Datum in `stimmen__quelle` anpassen. Der Satz "Das sind alle
 Bewertungen" stimmt nur, solange wirklich alle dort stehen. Der Absatz selbst ist Pflicht
 nach § 5b Abs. 3 UWG und bleibt stehen. Kundennamen kommen nicht auf die Seite, auch
 wenn sie bei MyHammer sichtbar sind, dafür bräuchte es die Einwilligung der Person.
@@ -71,14 +71,17 @@ Erfundene Zahlen kommen nicht auf die Seite. Lieber die Zeile streichen als rate
 
 ## 2. Formular scharfschalten
 
-> **Stand 06.11.2026, gegen die Anbieterseiten geprüft:** Der kostenlose
-> Formspree-Tarif erlaubt keine Datei-Uploads und nur 50 Anfragen im Monat, das
-> Foto ist aber der Kern des Formulars. Formspree steht außerdem nicht in der Liste
-> des EU-US Data Privacy Framework (dataprivacyframework.gov), die frühere Aussage
-> dazu ist aus der Datenschutzerklärung entfernt, genauso der ganze Formspree-Absatz.
-> **Wird das Formular angeschlossen, muss der Empfänger wieder in Abschnitt 3 der
-> Datenschutzerklärung stehen.** Empfehlung: eigenes kleines PHP-Skript bei Hostinger
-> statt Formspree. Keine Übermittlung in die USA, keine Kosten, Fotos gehen.
+> **Stand 06.11.2026, Entscheidung des Kunden:** Das Formular bleibt bei Formspree,
+> Fotos laufen über WhatsApp. Das Foto-Feld ist deshalb raus, der kostenlose Tarif
+> erlaubt ohnehin keine Datei-Uploads (50 Anfragen im Monat).
+>
+> **Vor dem Eintragen der Kennung klären:** Formspree steht nicht in der Liste des
+> EU-US Data Privacy Framework (dataprivacyframework.gov), auf den öffentlichen Seiten
+> war kein Auftragsverarbeitungsvertrag zu finden (`/legal/dpa/` gibt 404), und die
+> Nutzungsbedingungen nennen keine Standardvertragsklauseln. Bei team@formspree.io
+> DPA und Standardvertragsklauseln anfragen. Die Grundlage der Übermittlung muss
+> danach in Abschnitt 3 der Datenschutzerklärung ergänzt werden. Dort steht sie bewusst
+> noch nicht, weil sie nicht belegt ist.
 
 Das Formular ist fertig gebaut, aber noch nicht verbunden. Solange die Kennung fehlt,
 verschickt es nichts und weist die Besucher ehrlich auf Telefon und E-Mail hin.
@@ -90,10 +93,10 @@ verschickt es nichts und weist die Besucher ehrlich auf Telefon und E-Mail hin.
    ```js
    var FORMSPREE_ID = 'deineKennung';
    ```
-5. Im Formspree-Konto den Auftragsverarbeitungsvertrag nach Art. 28 DSGVO abschließen.
-   Ohne den ist die Nutzung datenschutzrechtlich nicht sauber, und die
-   Datenschutzerklärung behauptet, dass es ihn gibt.
-6. Selbst testen: Formular mit Foto abschicken und prüfen, ob es im Postfach ankommt.
+5. Mit Formspree den Auftragsverarbeitungsvertrag nach Art. 28 DSGVO und die
+   Standardvertragsklauseln abschließen. Ohne das ist die Nutzung datenschutzrechtlich
+   nicht sauber.
+6. Selbst testen: Formular abschicken und prüfen, ob es im Postfach ankommt.
 
 ## 3. Domain und Deploy
 

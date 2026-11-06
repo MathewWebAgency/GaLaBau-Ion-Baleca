@@ -747,12 +747,6 @@ a{color:inherit}
   display:block;width:100%;height:100%;aspect-ratio:1/1;
   object-fit:cover;object-position:0 100%;
 }
-.zaehlband__bild figcaption{
-  position:absolute;right:var(--gutter);bottom:clamp(.9rem,2vw,1.4rem);
-  font-family:var(--display);font-weight:600;line-height:1.2;
-  font-size:clamp(1.02rem,1.5vw,1.25rem);color:var(--kalk);
-  max-width:7.5em;text-align:right;
-}
 @media (min-width:900px){
   .zaehlband{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .zaehlband__bild{order:0}
@@ -795,30 +789,14 @@ a{color:inherit}
 }
 .zaehlband__stand{font-size:1rem;line-height:1.5;margin:0;max-width:none;font-weight:500}
 .zaehlband__stand a{font-weight:600;text-underline-offset:.18em}
-@media (max-width:599px){
-  .zaehlband__stand span{display:none}
-  .zaehlband__stand a{display:block;margin-top:.2rem}
-}
 .zaehlband :focus-visible{outline-color:var(--mulch)}
 @media (prefers-reduced-motion:reduce){ .rolle__band{transition:none} }
 
 /* ---------- Bewertungen ----------
-   Kein Kartenraster: drei Zitate ohne Rahmen, am Rechner treppenfoermig
-   versetzt. Der Schnitt steht rechts, damit die Kopfzeile die Breite traegt. */
-.stimmen__kopf{display:grid;gap:clamp(1.4rem,3vw,2rem);margin-bottom:clamp(2.6rem,5vw,4.4rem)}
-.stimmen__kopf .kopfzeile-sektion{margin-bottom:0}
-.stimmen__kopf .kopfzeile-sektion h2{max-width:18ch}
-.stimmen__schnitt{
-  display:flex;align-items:center;gap:.9rem;margin:0;max-width:none;
-}
-.stimmen__schnitt b{
-  font-family:var(--display);font-weight:600;line-height:1;color:var(--gelb);
-  font-size:clamp(3rem,5.2vw,4.4rem);letter-spacing:-.02em;
-}
-.stimmen__schnitt span{font-size:1rem;line-height:1.35;max-width:16ch;color:var(--kalk)}
-@media (min-width:900px){
-  .stimmen__kopf{grid-template-columns:minmax(0,1fr) auto;align-items:end}
-}
+   Kein Kartenraster: drei Zitate ohne Rahmen, am Rechner treppenfoermig versetzt. */
+/* Am Rechner steht davor Ion, ebenfalls dunkel (das Saegevideo dazwischen gibt
+   es nur am Telefon). Eine Stufe heller trennt die beiden Baender. */
+#bewertungen{background:var(--mulch-2)}
 .stimmen{display:grid;gap:clamp(2.4rem,6vw,3rem)}
 .stimme{margin:0}
 .sterne{display:flex;gap:2px;color:var(--gelb);margin-bottom:.9rem}
@@ -967,54 +945,11 @@ a{color:inherit}
 @media (hover:hover) and (pointer:fine){
   .feld input:hover,.feld textarea:hover{border-color:rgba(20,26,19,.6)}
 }
-/* ---------- Foto anhängen ---------- */
-/* Zwei sichtbare Wege statt eines Dateifelds: aufnehmen oder aus der Galerie.
-   Das Feld selbst bleibt im Tabverlauf und bedienbar, es ist nur nicht zu
-   sehen; der Knopf drumherum ist die sichtbare Schaltfläche. */
-.feld__titel{
-  display:block;margin-bottom:.5rem;
-  font-family:var(--auszeichnung);font-size:.88rem;font-weight:600;
-  color:var(--tinte-leise);
-}
-.band--dunkel .feld__titel{color:var(--kalk-leise)}
-.feld .nurtastatur{
-  position:absolute;width:1px;height:1px;min-height:0;margin:-1px;padding:0;border:0;
-  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;
-}
-.fotowahl{display:flex;flex-wrap:wrap;gap:.6rem}
-.fotowahl__knopf{
-  display:inline-flex;align-items:center;gap:.55rem;cursor:pointer;
-  flex:1 1 12rem;min-height:52px;padding:.8rem 1rem;
-  background:var(--kies);border:1px solid rgba(20,26,19,.34);
-  font-family:var(--auszeichnung);font-size:.85rem;font-weight:600;
-  color:var(--tinte);
-  transition:border-color 160ms var(--ease-out),background-color 160ms var(--ease-out),
-             transform 140ms var(--ease-out);
-}
-.fotowahl__knopf[hidden]{display:none}
-.fotowahl__knopf svg{width:21px;height:21px;flex:0 0 auto;color:var(--mulch)}
-.fotowahl__knopf:has(:focus-visible){outline:3px solid var(--mulch);outline-offset:2px}
-.fotowahl__knopf:active{transform:scale(.98)}
-@media (hover:hover) and (pointer:fine){
-  .fotowahl__knopf:hover{border-color:rgba(20,26,19,.6);background:var(--kies-2)}
-}
-.fotoliste{list-style:none;margin:.7rem 0 0;padding:0;display:grid;gap:.35rem}
-.fotoliste li{
-  display:flex;align-items:center;gap:.7rem;
-  padding:.5rem .3rem .5rem .7rem;background:var(--kies);color:var(--tinte);
-  font-size:.95rem;
-}
-.fotoliste__name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fotoliste__groesse{font-family:var(--auszeichnung);font-size:.76rem;font-weight:600;
-  color:var(--tinte-leise);font-variant-numeric:tabular-nums}
-.fotoliste__weg{
-  border:0;background:none;cursor:pointer;color:var(--tinte-leise);
-  min-width:44px;min-height:44px;font-size:1.15rem;line-height:1;
-}
-@media (hover:hover) and (pointer:fine){ .fotoliste__weg:hover{color:var(--tinte)} }
-.feld__hinweis{font-size:.88rem;color:var(--tinte-leise)}
-.band--dunkel .feld__hinweis{color:var(--kalk-leise)}
 .honig{position:absolute;left:-9999px}
+.formular__foto{margin:0 0 1.1rem;font-size:1rem;line-height:1.5;color:var(--kalk-leise)}
+.formular__foto a{color:var(--kalk);font-weight:600;text-underline-offset:.18em}
+/* .band--dunkel a erbt sonst die helle Schrift, auf Gelb waere sie kaum lesbar. */
+.band--dunkel a.kontakt__wa{color:var(--mulch);margin-bottom:.4rem}
 .formular__fuss{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.4rem}
 .meldung{font-size:.98rem;padding:.95rem 1.1rem;border:1px solid var(--gelb);
   background:#17301F}

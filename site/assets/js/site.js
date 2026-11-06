@@ -6,6 +6,7 @@
   /* ------------------------------------------------------------------
      Formspree. Ohne Kennung schickt das Formular nichts los und sagt das
      dem Besucher ehrlich, statt so zu tun als wäre etwas angekommen.
+     Fotos laufen nicht über das Formular, sondern über WhatsApp.
      ------------------------------------------------------------------ */
   var FORMSPREE_ID = ''; // z.B. 'xayzbwqd' aus formspree.io
 
@@ -220,87 +221,6 @@
 
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(messen);
     starten();
-  })();
-
-  /* ========================= Fotos anhängen ============================= */
-  /* Am Telefon gibt es zwei Wege, und beide sollen sichtbar sein: aufnehmen
-     oder aus der Galerie. Beide Felder schreiben in dieselbe Liste, damit das
-     Formular am Ende nur ein Feld verschickt. */
-  (function fotos() {
-    var galerie = document.getElementById('foto');
-    var kamera = document.getElementById('foto-kamera');
-    var liste = document.getElementById('fotoliste');
-    if (!galerie || !liste) return;
-
-    var MAX = 3;
-    var kannBuendeln = typeof window.DataTransfer === 'function';
-
-    // Ohne Kamera am Gerät wäre der Knopf eine Sackgasse: er öffnet dann nur
-    // denselben Dateidialog. Deshalb erscheint er nur auf Zeigegeräten, die
-    // sich wie ein Finger verhalten.
-    var knopf = document.getElementById('foto-kamera-knopf');
-    if (knopf && kamera && window.matchMedia('(pointer: coarse)').matches) knopf.hidden = false;
-
-    var mb = function (bytes) {
-      var m = bytes / (1024 * 1024);
-      return (m < 0.1 ? '<0,1' : m.toFixed(1).replace('.', ',')) + ' MB';
-    };
-
-    var setze = function (dateien) {
-      if (!kannBuendeln) return;
-      var dt = new DataTransfer();
-      dateien.slice(0, MAX).forEach(function (f) { dt.items.add(f); });
-      galerie.files = dt.files;
-    };
-
-    var zeichne = function () {
-      var dateien = Array.prototype.slice.call(galerie.files);
-      liste.textContent = '';
-      dateien.forEach(function (datei, i) {
-        var li = document.createElement('li');
-        var name = document.createElement('span');
-        name.className = 'fotoliste__name';
-        name.textContent = datei.name;
-        var groesse = document.createElement('span');
-        groesse.className = 'fotoliste__groesse';
-        groesse.textContent = mb(datei.size);
-        li.appendChild(name);
-        li.appendChild(groesse);
-        if (kannBuendeln) {
-          var weg = document.createElement('button');
-          weg.type = 'button';
-          weg.className = 'fotoliste__weg';
-          weg.setAttribute('aria-label', datei.name + ' wieder entfernen');
-          weg.textContent = '\u00d7';
-          weg.addEventListener('click', function () {
-            var rest = Array.prototype.slice.call(galerie.files);
-            rest.splice(i, 1);
-            setze(rest);
-            zeichne();
-          });
-          li.appendChild(weg);
-        }
-        liste.appendChild(li);
-      });
-    };
-
-    galerie.addEventListener('change', zeichne);
-    if (kamera) {
-      kamera.addEventListener('change', function () {
-        if (!kamera.files.length) return;
-        if (kannBuendeln) {
-          setze(Array.prototype.slice.call(galerie.files)
-            .concat(Array.prototype.slice.call(kamera.files)));
-          kamera.value = '';
-        } else {
-          // Ohne DataTransfer geht nur eins von beidem. Dann gewinnt die
-          // Aufnahme, und das Feld trägt den Namen, damit sie mitgeschickt wird.
-          kamera.name = 'foto';
-          galerie.removeAttribute('name');
-        }
-        zeichne();
-      });
-    }
   })();
 
   /* ===================== Vorher / Nachher Regler ======================== */
@@ -644,15 +564,6 @@
       if (erstesFehlende) {
         erstesFehlende.focus();
         meldung.hidden = true;
-        return;
-      }
-
-      var dateien = form.querySelector('#foto').files;
-      if (dateien.length > 3) { zeige('Bitte höchstens drei Bilder anhängen.', true); return; }
-      var summe = 0;
-      for (var i = 0; i < dateien.length; i++) summe += dateien[i].size;
-      if (summe > 8 * 1024 * 1024) {
-        zeige('Die Bilder sind zusammen größer als 8 MB. Bitte weniger oder kleinere Bilder anhängen.', true);
         return;
       }
 
